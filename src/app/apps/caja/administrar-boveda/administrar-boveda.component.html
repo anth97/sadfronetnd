@@ -1,0 +1,291 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Basic</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main"> <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Forms</li>
+    <li class="breadcrumb-item">Basic</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Administrar Bóveda</h4>
+          </div>
+          <div class="card-body">
+              <ul ngbNav #nav="ngbNav"  class="nav-tabs">
+              <li [ngbNavItem]="1" *ngIf="!estado" >
+                <a ngbNavLink >Abrir Bóveda Caja</a>
+                <ng-template ngbNavContent  >
+                  <form
+                    class="form-form m-4"
+                    [formGroup]="form"
+                    (ngSubmit)="onRegister()"
+                  >
+                    <div class="col-md-7 form-group">
+                      <label>Usuario</label>
+                      <input
+                        class="form-control form-control-sm"
+                        [attr.disabled]="true"
+                        formControlName="usuario"
+                        
+                        
+                      />
+                    </div>
+
+                    <div class="col-md-7 form-group">
+                      <label>Fecha actual</label>
+                      <input
+                        class="form-control form-control-sm"
+                        [attr.disabled]="true"
+                        formControlName="fecha_actual"
+                      /> 
+                      
+                    </div>
+                    <div class="col-md-7 form-group">
+                      <label>Hora Actual</label>
+                      <input
+                        class="form-control form-control-sm"
+                        [attr.disabled]="true"
+                        formControlName="hora_actual"
+                              
+                      />
+                    </div>
+
+                    <div class="col-md-7 form-group">
+                      <label>Monto Sistema</label>
+                      <input
+                        class="form-control form-control-sm"
+                        [attr.disabled]="true"
+                        formControlName="monto_sistema"
+                        value={{total}}
+                        
+                      />
+                    </div>
+                    <br>
+
+                    <button
+                      type="submit"
+                      class="btn btn-success btn-sm"
+                      style="float: right"
+                      (click)="abrirBoveda()"
+                    >
+                      Abrir Bóveda
+                    </button>
+
+                    <br>
+                    <br>
+
+                    <button
+                      type="submit"
+                      class="btn btn-success btn-sm"
+                      style="float: right"
+                      (click)="clickA()"
+                    >
+                      Probar Modal
+                    </button>
+                  </form>
+
+                  
+                  
+
+                  
+                </ng-template>
+              </li>
+
+              <li [ngbNavItem]="1" *ngIf="estado" [(activeId)]="active">
+                <a ngbNavLink >Cerrar Bóveda</a>
+                <ng-template ngbNavContent>
+                  <form
+                    class="form-form m-4"
+                    [formGroup]="form2"
+                    (ngSubmit)="onRegister()"
+                  >
+                    <div class="row">
+                      <div class="col-md-6 form-group">
+                        <label>Nro. de cheques</label>
+                        <input
+                          class="form-control form-control-sm"
+                          [attr.disabled]="true"
+                          formControlName="nro_cheques"
+                        />
+                      </div>
+
+                      <div class="col-md-6 form-group">
+                        <label>Monto en Cheque</label>
+                        <input
+                          class="form-control form-control-sm"
+                          [attr.disabled]="true"
+                          formControlName="monto_cheque"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                          <label>Nro. Operaciones Electrónicas</label>
+                          <input
+                            class="form-control form-control-sm"
+                            [attr.disabled]="true"
+                            formControlName="op_electr"
+                          />
+                        </div>
+  
+                        <div class="col-md-6 form-group">
+                          <label>Monto en Operaciones Electrónicas</label>
+                          <input
+                            class="form-control form-control-sm"
+                            [attr.disabled]="true"
+                            formControlName="monto_op_electr"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6 form-group">
+                          <label>Usuario de Apertura</label>
+                          <input
+                            class="form-control form-control-sm"
+                            [attr.disabled]="true"
+                            formControlName="usuario_apertura"
+                          />
+                        </div>
+  
+                        <div class="col-md-6 form-group">
+                          <label>Fecha y Hora de Apertura</label>
+                          <input
+                            class="form-control form-control-sm"
+                            [attr.disabled]="true"
+                            formControlName="fecha_apertura"
+                          />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label>Monto Sistema</label>
+                                <input
+                                  class="form-control form-control-sm"
+                                  [attr.disabled]="true"
+                                  formControlName="monto_sistema"
+                                  value={{total}}
+                                />
+                              </div>
+
+                        </div>
+
+                        
+                      </div>
+                      <br>
+                      
+                      <button 
+                      type="submit"
+                      class="btn btn-success btn-sm"
+                      style="float: right"
+                      (click)="cerrarBoveda()"
+                      [disabled]="cajaAbierta"
+                    >
+                      Cerrar Bóveda
+                    </button>
+                  </form>
+                  <br>
+
+
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-md">
+                        <tr>
+                          <th>Apertura</th>
+                          <th>Caja</th>
+                          <th>Cajero</th>
+                          <th>Monto</th>
+                        </tr>
+
+                        <tr *ngFor="let cajaActiva of lstGrilla; let i =index">
+                          <td *ngIf="lstGrilla[i].abierto">{{lstGrilla[i].apertura}}</td>
+                          <td *ngIf="lstGrilla[i].abierto">{{lstGrilla[i].caja}}</td>
+                          <td *ngIf="lstGrilla[i].abierto">{{lstGrilla[i].cajero}}</td>
+                          <td *ngIf="lstGrilla[i].abierto">{{lstGrilla[i].monto}}</td>
+                          
+                      </tr>
+
+                       
+                        
+                    </table>
+                    <span *ngIf="cajaAbierta"><small class="text-danger">Todas las cajas deben estar cerradas</small></span>
+
+
+                </div>
+                
+                </ng-template>
+              </li>
+            </ul>
+
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Detalle de las Denominaciones</h4>
+          </div>
+          <div class="row justify-content-md-center">
+          <div class="col-md-8" >
+          <div class="card-body">
+            <div class="table-responsive"  >
+                <table class="table table-bordered table-md" >
+                    <tr>
+                      <th class="text-center " style="width:40%">Denominación</th>
+                      <th class="text-center" style="width:10%">Cantidad</th>
+                      <th class="text-center" style="width:40%">SubTotal</th>
+                      
+                    </tr>
+
+                    <tr *ngFor="let denominacion of lstDenominaciones; let i =index">
+                      <td class="text-center">{{lstDenominaciones[i]}}</td>
+                        <td  style="text-align:center;">
+                          <div>
+                          <input [(ngModel)]="lstCantidades[i].cantidad" 
+                          class="form-control form-control-sm" readonly min="0">
+                        </div>
+                        </td>
+
+                        <td class="text-center">{{lstCantidades[i].subtotal}}</td>
+                        
+                    </tr>
+<!-- 
+                    <tr>
+                        <td class="text-center">{{denominacion}}</td>
+                        <td  style="text-align:center;">
+                          <div>
+                          <input [(ngModel)]="cantidad" class="form-control form-control-sm " 
+                          type="number">
+                        </div>
+                        </td>
+
+                        <td class="text-center">{{calcularSubTotal(denominacion,cantidad)}}</td>
+                        
+                    </tr> -->
+                    
+                </table>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+          <div class="row">
+            <div class="col-12 col-md-6 col-lg-6"><label  style="float: right; font-size: x-large;" >Total</label></div>
+            <div class="col-12 col-md-6 col-lg-6"><label style="font-size: x-large;" >{{total}}</label></div>  
+
+        </div>
+        <br><br><br>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,108 @@
+<section class="main-content">
+    <ul class="breadcrumb breadcrumb-style ">
+        <li class="breadcrumb-item">
+            <h5 class="page-title m-b-0">Predio</h5>
+        </li>
+        <li class="breadcrumb-item bcrumb-1">
+            <a routerLink="/dashboard/main">
+                <i class="fas fa-home font-17"></i></a>
+        </li>
+        <li class="breadcrumb-item">Nuevo urbano</li>
+        <li class="breadcrumb-item">Propietario</li>
+    </ul>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4> Registro Predio</h4> &nbsp;                        
+                    </div>
+                    <div class="card-body">                        
+                        <div class="stepper-wrapper" *ngIf="!rusticoActive">
+                            <div class="stepper-item completed">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">2</div>
+                                <div class="step-name">V. CONSTRUCCIÓN</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">3</div>
+                                <div class="step-name">COMPLEMENTOS</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">4</div>
+                                <div class="step-name">ÁREA COMÚN</div>
+                            </div>
+                            <div class="stepper-item active">
+                                <div class="step-counter">5</div>
+                                <div class="step-name">PROPIETARIO</div>
+                            </div>
+                        </div>
+                        <div class="stepper-wrapper" *ngIf="rusticoActive">
+                            <div class="stepper-item">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item active">
+                                <div class="step-counter">2</div>
+                                <div class="step-name">PROPIETARIO</div>
+                            </div>
+                        </div>
+                        <form [formGroup]="formPadre">
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label>Uso Predio</label>
+                                    <select class="form-select form-control" formControlName="cod_tipo_uso">
+                                        <option value= "" disabled>Seleccione una opción</option>
+                                        <option *ngFor="let tipo of lstTipoUso" [ngValue]="tipo">
+                                            {{tipo.denominacion}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label>Condición Propiedad</label>
+                                    <select class="form-select form-control" formControlName="cod_tipo_cond_propiedad">
+                                        <option value="" disabled>Seleccione una opción</option>
+                                        <option *ngFor="let propiedad of lstPropiedad" [ngValue]="propiedad">
+                                            {{propiedad.denominacion}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="minlength">% Condición</label>
+                                    <input type="text" class="form-control" 
+                                    formControlName="porcentaje_condicion" placeholder="0.00"
+                                    maxlength=7
+                                        (keypress)="InputNumber($event)" 
+                                        [ngClass]="{
+                                            'is-invalid':!formPadre.get('porcentaje_condicion').valid && formPadre.get('porcentaje_condicion').touched                                        }"/>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="tipoPersona">Tipo de Persona</label>
+                                    <select class="form-select form-control input-sm" id="tipoPersona" name="tipoPersona" (change)="save_tipo($event)">
+                                        <option value="natural" >Persona Natural</option>
+                                        <option value="juridica" >Persona Jurídica</option>
+                                    </select>   
+                                </div>
+                            </div>
+                        </form>
+                        <app-registro-persona-natural *ngIf="tipo_persona==='natural'" 
+                        [cod_tipo_propietario]="this.formPadre.controls['cod_tipo_cond_propiedad'].value.codigo"
+                        [cod_tipo_uso]="this.formPadre.controls['cod_tipo_uso'].value.codigo"
+                        [porc_propiedad]="this.formPadre.controls['porcentaje_condicion'].value"  
+                        [formPadre]="this.formPadre"
+                        ></app-registro-persona-natural>  
+
+                        <app-registro-persona-juridica *ngIf="tipo_persona==='juridica'" 
+                        [cod_tipo_propietario]="this.formPadre.controls['cod_tipo_cond_propiedad'].value.codigo"
+                        [cod_tipo_uso]="this.formPadre.controls['cod_tipo_uso'].value.codigo"
+                        [porc_propiedad]="this.formPadre.controls['porcentaje_condicion'].value" 
+                        [formPadre]="this.formPadre"
+                        ></app-registro-persona-juridica>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>

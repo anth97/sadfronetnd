@@ -1,0 +1,321 @@
+<form class="form-form m-4" [formGroup]="form" (ngSubmit)="onRegister()">
+  <div class="row">
+    <h6>Persona Natural</h6>
+  </div>
+  <div class="row">
+    <div class="col form-group">
+      <label>Tipo de Documento<span class="text-danger">*</span></label>
+      <select class="form-select form-control" formControlName="cod_tipo_doc_identidad" (change)="onChangeDocumento()">
+        <option value="" disabled>Seleccione una opción</option>
+        <option *ngFor="let documento of lstDocumentos" [ngValue]="documento">
+          {{documento.denominacion}}</option>
+      </select>
+    </div>
+
+    <div class="col form-group">
+
+      <label>Número de Documento <span class="text-danger">*</span></label>
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="Número de Documento"
+          [(ngModel)]="s_num_documento_identidad" formControlName="num_documento_identidad"
+          (keypress)="keyPressNumbers($event)" [maxlength]="length" [minlength]="length" [ngClass]="{
+                            'is-invalid':!form.get('num_documento_identidad').valid && form.get('num_documento_identidad').touched
+                        }" required>
+        <button class="btn btn-outline-secondary" type="button" (click)="searchPersonaNatural()">
+          <i class="fas fa-search"></i>
+        </button>
+
+
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+  <div class="row">
+    <div class="col form-group">
+      <label>Apellido Paterno <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" placeholder="Apellido Paterno" formControlName="apellido_paterno"
+        maxlength="100" (keypress)="keyPressAlphaNumericWithCharacters($event)" [ngClass]="{
+                        'is-invalid':!form.get('apellido_paterno').valid && form.get('apellido_paterno').touched
+                    }" required>
+
+    </div>
+
+    <div class="col form-group">
+      <label>Apellido Materno <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" placeholder="Apellido Materno" formControlName="apellido_materno"
+        maxlength="100" (keypress)="keyPressAlphaNumericWithCharacters($event)" [ngClass]="{
+                        'is-invalid':!form.get('apellido_materno').valid && form.get('apellido_materno').touched
+                    }" required>
+
+    </div>
+    <div class="col form-group">
+      <label>Nombre <span class="text-danger">*</span></label>
+      <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre" maxlength="100"
+        (keypress)="keyPressAlphaNumericWithCharacters($event)" [ngClass]="{
+                        'is-invalid':!form.get('nombre').valid && form.get('nombre').touched
+                    }" required>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col form-group">
+      <label>Sexo<span class="text-danger">*</span></label>
+
+      <select class="form-select form-control" formControlName="cod_sexo" required>
+        <option value="" disabled>Seleccione una opción</option>
+        <option *ngFor="let sexo of lstSexo" [ngValue]="sexo">{{sexo.denominacion}}</option>
+      </select>
+
+    </div>
+
+    <div class="col form-group">
+      <label>Fecha de nacimiento<span class="text-danger">*</span></label>
+      <input type="date" class="form-control" formControlName="fec_nacimiento" (change)="onChangeFecha()"
+        value="{{ fec_nacimiento | date:'yyyy-MM-dd' }}">
+
+      <!-- <input type="date" formControlName="fec_nacimiento" value="{{ form.controls['fec_nacimiento'] | date:'yyyy-MM-dd' }}">
+
+                <input type="date"  class="form-control" ngModel name="fec_nacimiento"  placeholder="date" date 
+                [ngClass]="{'is-invalid':date.errors?.date}"/> 
+                -->
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col form-group">
+      <label>Teléfono<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" placeholder="Telefono principal" formControlName="telefono_principal"
+        (keypress)="keyPressNumbers($event)" maxlength="9" [ngClass]="{
+                        'is-invalid':!form.get('telefono_principal').valid && form.get('telefono_principal').touched
+
+                    }" required>
+
+    </div>
+    <div class="col form-group">
+      <label>Teléfono secundario</label>
+      <input type="text" class="form-control" placeholder="Telefono Secundario" formControlName="telefono_secundario"
+        (keypress)="keyPressNumbers($event)" maxlength="9" [ngClass]="{
+                        'is-invalid':!form.get('telefono_secundario').valid && form.get('telefono_secundario').touched
+                    }">
+
+    </div>
+    <div class="col form-group">
+      <label>Correo Electrónico<span class="text-danger">*</span></label>
+      <input type="correo_electronico" class="form-control" placeholder="ejemplo@ejemplo.com"
+        formControlName="correo_electronico" maxlength="254" [ngClass]="{
+                        'is-invalid':!form.get('correo_electronico').valid && (form.get('correo_electronico').dirty || form.get('correo_electronico').touched)
+
+                    }" required>
+
+    </div>
+  </div>
+
+
+
+
+
+  <!-- <h6>Domicilio Fiscal</h6>
+
+            <div class="row">
+                <div class="col form-group">
+                <label>Departamento<span class="text-danger">*</span></label>
+                <select id="departamento" class="form-select">
+                    <option selected disabled>Selecciona una opcion</option>
+                    <option>Masculino</option>
+                    <option>Femenino</option>
+                </select>
+                </div>
+
+                <div class="col form-group">
+                <label>Provincia<span class="text-danger">*</span></label>
+                <select id="provincia" class="form-select">
+                    <option selected disabled>Selecciona una opcion</option>
+                    <option>Masculino</option>
+                    <option>Femenino</option>
+                </select>
+                </div>
+
+                <div class="col form-group">
+                    <label>Distrito<span class="text-danger">*</span></label>
+                    <select id="distrito" class="form-select">
+                        <option selected disabled>Selecciona una opcion</option>
+                        <option>Masculino</option>
+                        <option>Femenino</option>
+                    </select>
+                </div>
+            </div> -->
+  <h6>Domicilio fiscal</h6>
+  <div class="row">
+    <div class="col form-group">
+      <label>Departamento<span class="text-danger">*</span></label>
+      <select class="form-select form-control" formControlName="codigo_depart" (change)="onChangeDepartamento()">
+        <option value="" disabled>Seleccione una opción</option>
+        <option *ngFor="let departamento of lstDepartamentos" [ngValue]="departamento">{{departamento.denominacion}}
+        </option>
+      </select>
+    </div>
+
+    <div class="col form-group">
+      <label>Provincia<span class="text-danger">*</span></label>
+      <select class="form-select form-control" formControlName="codigo_prov" (change)="onChangeProvincia()">
+        <option value="" disabled>Seleccione una opción</option>
+        <ng-container *ngFor="let provincia of lstProvincias">
+          <option *ngIf="provincia.codigo_prov !='00'" [ngValue]="provincia">{{provincia.denominacion}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="col form-group">
+      <label>Distrito<span class="text-danger">*</span></label>
+      <select class="form-select form-control" formControlName="codigo_dist" (change)="onChangeDistrito()">
+        <option value="" disabled>Seleccione una opción</option>
+        <ng-container *ngFor="let distrito of lstDistritos">
+          <option *ngIf="distrito.codigo_dist !='00'" [ngValue]="distrito">{{distrito.denominacion}}</option>
+        </ng-container>
+
+      </select>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col form-group">
+      <label>Vía<span class="text-danger">*</span></label>
+      <select class="form-select form-control" formControlName="cod_tipo_via" (change)="onChangeVia()">
+        <option value="" disabled>Seleccione una opción</option>
+        <option *ngFor="let via of lstVias" [ngValue]="via">{{via.denominacion}}</option>
+      </select>
+    </div>
+
+    <div class="col form-group">
+      <label>Dirección<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" placeholder="Domicilio" formControlName="domicilio" maxlength="100"
+        [ngClass]="{
+                    'is-invalid':!form.get('domicilio').valid && form.get('domicilio').touched
+
+                }" required>
+
+    </div>
+
+    <div class="col form-group">
+      <label>Nro/Int/Mz lt<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" placeholder="Nro/Int/Mz lt" formControlName="nro_domicilio" maxlength="20"
+        [ngClass]="{
+                        'is-invalid':!form.get('nro_domicilio').valid && form.get('nro_domicilio').touched
+                    }" required>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group">
+      <label>Referencia</label>
+      <input type="text" class="form-control" placeholder="Referencia" maxlength="200"
+        formControlName="referencia_domicilio">
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label>Estado Civil<span class="text-danger">*</span></label>
+      <select class="form-select form-control" formControlName="cod_estado_civil" (change)="onChangeEstado()">
+        <option value="" disabled>Seleccione una opción</option>
+        <option *ngFor="let estado of lstEstadoCivil" [ngValue]="estado">{{estado.denominacion}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Datos conyuge -->
+  <div *ngIf="this.form.controls['cod_estado_civil'].value != null">
+    <div *ngIf="this.form.controls['cod_estado_civil'].value.codigo == '010002'">
+      <h6>Datos del Conyuge</h6>
+
+      <div class="row">
+        <div class="col form-group">
+          <label>Tipo de Documento<span class="text-danger">*</span></label>
+          <select class="form-select form-control" formControlName="conyuge_cod_tipo_doc_identidad"
+            [(ngModel)]="conyuge_cod_tipo_doc_identidad" (change)="onChangeConyuge()">
+            <option value="" disabled>Seleccione una opción</option>
+            <option *ngFor="let documento of lstDocumentos" [ngValue]="documento">
+              {{documento.denominacion}}</option>
+          </select>
+        </div>
+
+
+        <div class="col form-group">
+          <label>Número de Documento <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Número de Documento"
+              [(ngModel)]="s_conyuge_num_documento_identidad" formControlName="conyuge_num_documento_identidad"
+              (keypress)="keyPressNumbers($event)" [maxlength]="conyugeLength" [minlength]="conyugeLength" [ngClass]="{
+                                'is-invalid':!form.get('conyuge_num_documento_identidad').valid && form.get('conyuge_num_documento_identidad').touched
+                            }" required>
+            <button class="btn btn-outline-secondary" type="button" (click)="searchConyuge()">
+              <i class="fas fa-search"></i>
+            </button>
+
+
+          </div>
+
+
+
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col form-group">
+          <label>Apellido Paterno <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Apellido Paterno"
+            formControlName="conyuge_apellido_paterno" maxlength="100"
+            (keypress)="keyPressAlphaNumericWithCharacters($event)" [ngClass]="{
+                            'is-invalid':!form.get('conyuge_apellido_paterno').valid && form.get('conyuge_apellido_paterno').touched
+    
+                        }" required>
+
+        </div>
+        <div class="col form-group">
+          <label>Apellido Materno <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" placeholder="Apellido Materno"
+            formControlName="conyuge_apellido_materno" maxlength="100"
+            (keypress)="keyPressAlphaNumericWithCharacters($event)" [ngClass]="{
+                            'is-invalid':!form.get('conyuge_apellido_materno').valid && form.get('conyuge_apellido_materno').touched
+    
+                        }" required>
+
+        </div>
+      </div>
+      <div class="col form-group">
+        <label>Nombre <span class="text-danger">*</span></label>
+        <input type="text" class="form-control" placeholder="Nombre" formControlName="conyuge_nombre" maxlength="100"
+          (keypress)="keyPressAlphaNumericWithCharacters($event)" [ngClass]="{
+                        'is-invalid':!form.get('conyuge_nombre').valid && form.get('conyuge_nombre').touched
+                    }" required>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+      <button class="btn btn-primary" (click)="btnAtras()">Atras</button>
+      &nbsp;
+      <button type="submit" class="btn btn-success btn-sm" style="float: right;" [disabled]="!form.valid || !formPadre.valid"
+        (click)="save()">Registrar</button>
+    </div>
+
+  </div>
+</form>

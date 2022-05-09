@@ -1,0 +1,140 @@
+<p>a-demanda works!</p>
+
+<section class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h4 style="margin-left: 25px;">Fiscalización a Demanda</h4>
+            <div class="card-body">
+                <form class="register-form m-4" [formGroup]="register">
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>Código Predio</label>
+                            <input type="text" class="form-control form-control-sm" formControlName="cod_predio" placeholder="">
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Tipo Predio</label>
+                            <div class="input-group">
+                                <select class="form-select form-select-sm" formControlName="tipo_predio" [(ngModel)]="predioTipo">
+                                <option value="" selected>Seleccione</option>
+                                <option value="020001">Urbano</option>
+                                <option value="020002">Rústico</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Ordenar por</label>
+                            <div class="input-group">
+                                <select class="form-select form-select-sm" formControlName="ordenar_por">
+                            <option value="">Seleccione</option>
+                            <option value="fec_reg">Mas Antiguo a mas Reciente</option>
+                                <option value="-fec_reg">Mas Reciente a mas Antiguo</option>
+                        </select>
+                                <button class="btn btn-outline btn-success btn-sm" type="button" (click)="searchPredioFiscalizacion()">
+                        <i class="fas fa-search"></i>
+                        </button>
+                            </div>
+                        </div>
+                        <!-- <div class="table-search-area">
+                        <div>
+                            <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                            <input placeholder="Search" type="text" class="browser-default search-field" (keyup)='filterDatatable($event)' aria-label="Search box">
+                        </div>
+                    </div> -->
+                    </div>
+                    <!-- PREDIO URBANO -->
+                    <div class="row" *ngIf="predioTipo=='020001'">
+                        <div class="form-group col-md-8">
+                            <label>Dirección/Referencia</label>
+                            <input type="text" class="form-control form-control-sm" formControlName="ref_direccion">
+                        </div>
+                        <!-- PREDIO URBANO -->
+                        <div class="form-group col-md-2">
+                            <label>Número/Lote</label>
+                            <input type="text" class="form-control form-control-sm" formControlName="numero_lote">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Manzana</label>
+                            <input type="text" class="form-control form-control-sm" formControlName="manzana">
+                        </div>
+                    </div>
+
+                    <!-- PREDIO  RUSTICO -->
+
+                    <div class="row" *ngIf="predioTipo=='020002'">
+                        <div class="form-group col-md-12">
+                            <label>Dirección/Referencia</label>
+                            <input type="text" class="form-control form-control-sm" formControlName="ref_direccion">
+                        </div>
+                    </div>
+                </form>
+                <ngx-datatable class="material" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)="setPage($event)" [rows]="rows" [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
+                    rowHeight="auto" [limit]="page.size">
+                    <ngx-datatable-column [width]="90" name="N°">
+                        <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                            {{ rowIndex+1 +(page.pageNumber*page.size)}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Fecha">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <!-- <row class="predio"></row>fec_reg| date:'dd/MM/yyyy'}} -->
+                            {{row.predio.fec_reg| date:'dd/MM/yyyy'}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Tipo Predio">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <div *ngIf="row.predio.prediourbano">Urbano</div>
+                            <div *ngIf="row.predio.prediorustico">Rústico</div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="250" name="Dirección / Referencia">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            {{row.predio.ref_direccion}}
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="250" name="Contribuyente">
+                        <ng-template text-align="center" let-row="row" ngx-datatable-cell-template>
+                            <div *ngIf="row.contribuyente.natural">{{row.contribuyente.natural.nombre}} {{row.contribuyente.natural.apellido_paterno}} {{row.contribuyente.natural.apellido_materno}}
+                            </div>
+                            <div *ngIf="row.contribuyente.juridica">{{row.contribuyente.juridica.nombre}} {{row.contribuyente.juridica.apellido_paterno}} {{row.contribuyente.juridica.apellido_materno}}</div>
+
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [width]="200" name="Prioridad">
+
+                        <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                            <select class="form-select form-select-sm" name="prioridadFiscalizacion" (change)="onChangePrioridad($event,row.predio.id,rowIndex)">                                            
+                                        <option  *ngFor="let prioridad of tablaPrioridad"   [value]="prioridad.codigo">
+                                                {{prioridad.denominacion}}
+                                            </option>
+                                        </select>
+                        </ng-template>
+
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Acción" sortable="false">
+                        <ng-template let-row="row" ngx-datatable-cell-template>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <a class="msr-2 h-auto tblViewBtn" [routerLink]="['/fiscalizacion/informacion', row.id]">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </div>
+                                <div class="form-group col-md-4">
+
+                                    <!-- <input type="checkbox" name="custom-switch-checkbox" (change)="onChangeswitch($event)" class="custom-switch-input">
+                                        <span class="custom-switch-indicator"></span>
+                                                                    -->
+                                    <mat-slide-toggle color="primary" [checked]="row.checked">
+                                    </mat-slide-toggle>
+
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+
+
+            </div>
+        </div>
+    </div>
+</section>

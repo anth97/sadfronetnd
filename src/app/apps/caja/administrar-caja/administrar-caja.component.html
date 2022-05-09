@@ -1,0 +1,313 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Basic</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Forms</li>
+    <li class="breadcrumb-item">Basic</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+
+        <div class="card">
+          <div class="card-header">
+            <h4>Administrar Caja</h4>
+          </div>
+          <div class="card-body">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+
+              <!-- Abrir Caja -->
+              <li [ngbNavItem]="1">
+                <a ngbNavLink>Aperturar Caja</a>
+                <ng-template ngbNavContent>
+                  <form class="form-form m-4" [formGroup]="formAperturar" (ngSubmit)="onRegisterAperturar()">
+
+                    <div class="col-md-8 form-group">
+                      <label>Caja<span class="text-danger">*</span></label>
+                      <select class="form-select" formControlName="cod_caja">
+                        <option disabled>Seleccione una opción</option>
+                        <ng-container *ngFor="let caja of lstCajas">
+                          <option *ngIf="caja.codigo_estado_caja != '009001'" 
+                          [ngValue]="caja"
+                          >{{caja.nombre }}</option>
+                        </ng-container>
+                          
+                      </select>
+                    </div>
+
+                    <div class="col-md-8 form-group">
+                      <label>Cajero<span class="text-danger">*</span></label>
+                      <select class="form-select" formControlName="cod_cajero" (change)="onChangeCajero()" >
+                        <option disabled>Seleccione una opción</option>
+                        <ng-container *ngFor="let cajero of lstCajerosDisponibles">
+                          <option
+                          [ngValue]="cajero"
+                          >{{cajero.last_name+", "+cajero.first_name}}</option>
+                        </ng-container>
+                      </select>
+                    </div>
+
+                    <div class="col-md-8 form-group ">
+                      <label>Monto a Transferir</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" formControlName="monto_transferir" placeholder="0.00"
+                          readonly [(ngModel)]="totalGrilla"/>
+                        <button class="btn btn-outline-secondary" type="button" 
+                        [disabled]="!formAperturar.controls['cod_caja'].valid || !formAperturar.controls['cod_cajero'].valid" (click)="clickA()">
+                          <i class="fas fa-caret-down"></i> 
+                        </button>
+                      </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-sm"
+                      style="float: right; margin-top: 10px;" 
+                      (click)="abrirCaja()" [disabled]="!formAperturar.valid || this.formAperturar.controls['monto_transferir'].value == 0"
+                      >Aperturar Caja</button>
+
+                  </form>
+                  
+                  <br><br>
+                  <div class="table-responsive">
+                    <table *ngIf="lstGrilla" class="table table-bordered table-md">
+                        <tr>
+                          <th>Apertura</th>
+                          <th>Caja</th>
+                          <th>Cajero</th>
+                          <th>Monto</th>
+                          <th>Acciones</th>
+                        </tr>
+
+                        <tr *ngFor="let cajaActiva of lstGrilla; let i =index">
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].apertura}}</td>
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].caja}}</td>
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].cajero}}</td>
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].monto}}</td>
+                            <td *ngIf="lstGrilla[i].monto > 0">
+                              <div class="buttons">
+                                <a
+                                  class="msr-2 h-auto tblViewBtn"
+                                >
+                                  <i class="fas fa-eye"></i>
+                                </a>
+          
+                                <a
+                                  class="msr-2 h-auto tblPrintBtn"
+                                >
+                                  <i class="fas fa-print"></i>
+                                </a>
+          
+                                <a class="h-auto tblDelBtn" (click)="cerrar(lstGrilla[i].caja_id)">
+                                  <i class="fas fa-lock"></i>
+                                </a>
+                              </div>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                    <span *ngIf="lstGrilla.length > 0"><small class="text-danger">Todas las cajas deben estar cerradas</small></span>
+
+
+                </div>
+                </ng-template>
+              </li>
+
+               <!-- Cerrar Caja -->
+              <li [ngbNavItem]="2">
+                <a ngbNavLink>Cerrar Caja</a>
+                <ng-template ngbNavContent>
+
+                  <form class="form-form" [formGroup]="formCerrar" (ngSubmit)="onRegisterCerrar()">
+
+                    <div class="row">
+
+                      <div class="col form-group">
+                        <label>Caja<span class="text-danger">*</span></label>
+                        <select class="form-select" formControlName="cod_cajaCerrar" (change)="onChangeCajaCerrar()">
+                          <option disabled>Seleccione una opción</option>
+                          <ng-container *ngFor="let cajaAsignada of lstCajasAsignadas" >
+                            <option 
+                            [ngValue]="cajaAsignada.caja"
+                            >{{cajaAsignada.caja.nombre }}</option>
+                          </ng-container>
+                            
+                        </select>
+                      </div>
+
+                      <div class="col form-group">
+                        <label>Cajero<span class="text-danger">*</span></label>
+                        <input readonly type="text" class="form-control" formControlName="cod_cajeroCerrar"
+                           />
+                        
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col form-group ">
+                        <label>Nro. de Cheques</label>
+                        <input readonly type="number" min="0" class="form-control" formControlName="num_cheques" placeholder="0"
+                          maxlength=7 (keypress)="keyPressNumbers($event)" />
+                      </div>
+
+                      <div class="col form-group ">
+                        <label>Monto en Cheque</label>
+                        <input readonly type="number" min="0" class="form-control" formControlName="monto_cheque" placeholder="0"
+                          maxlength=7 (keypress)="InputNumberDecimal($event)" />
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col form-group ">
+                        <label>Nro. Operaciones Electrónicas</label>
+                        <input readonly type="number" min="0" class="form-control" formControlName="num_operaciones_electronicas"
+                          placeholder="0" maxlength=7 (keypress)="keyPressNumbers($event)" />
+                      </div>
+
+                      <div class="col form-group ">
+                        <label>Monto en Operaciones Electrónicas</label>
+                        <input readonly type="number" min="0" class="form-control" formControlName="monto_operaciones_electronicas"
+                          placeholder="0" maxlength=7 (keypress)="InputNumberDecimal($event)" />
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col form-group ">
+                        <label>Monto a Transferir</label>
+                        <div class="input-group">
+                          <input readonly type="text" class="form-control" formControlName="monto_transferirCerrar" placeholder="0.00"
+                          [(ngModel)]="totalGrillaCerrar" 
+                          [ngStyle]="{'color':totalGrillaCerrar!= totalMontoCaja  ? 'red' : '' }"/>
+                            
+
+                            <button class="btn btn-outline-secondary" type="button" 
+                            [disabled]="!formCerrar.controls['cod_cajaCerrar'].valid" (click)="clickA()">
+                              <i class="fas fa-caret-down"></i> 
+                            </button>
+                        </div>
+                      </div>
+
+                      <div class="col form-group ">
+                        <label>Monto en caja</label>
+                        <input type="number" readonly class="form-control" formControlName="monto_caja" placeholder="0" 
+                        [(ngModel)]="totalMontoCaja"
+                        [ngStyle]="{'color':totalGrillaCerrar!= totalMontoCaja  ? 'red' : '' }"/>
+                      </div>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-sm"
+                    style="float: right; margin-top: 10px;" 
+                    (click)="cerrarCaja()" [disabled]="!formCerrar.valid || totalGrillaCerrar!=totalMontoCaja"
+                    >Cerrar Caja</button>
+
+                  </form>
+                  <br><br>
+                  <div class="table-responsive">
+                    <table *ngIf="lstGrilla" class="table table-bordered table-md">
+                        <tr>
+                          <th>Apertura</th>
+                          <th>Caja</th>
+                          <th>Cajero</th>
+                          <th>Monto</th>
+                        </tr>
+
+                        <tr *ngFor="let cajaActiva of lstGrilla; let i =index">
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].apertura}}</td>
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].caja}}</td>
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].cajero}}</td>
+                            <td *ngIf="lstGrilla[i].monto > 0">{{lstGrilla[i].monto}}</td>
+                            
+                        </tr>
+                        
+                    </table>
+                    <span *ngIf="lstGrilla.length > 0"><small class="text-danger">Todas las cajas deben estar cerradas</small></span>
+
+
+                </div>
+                </ng-template>
+              </li>
+
+            </ul>
+
+            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Detalle de las Denominaciones</h4>
+          </div>
+          <div class="row justify-content-md-center">
+          <div class="col-md-8" >
+          <div class="card-body">
+            <div *ngIf="this.active==1" class="table-responsive"  >
+                <table  class="table table-bordered table-md" >
+                    <tr>
+                      <th class="text-center " style="width:40%">Denominación</th>
+                      <th class="text-center" style="width:10%">Cantidad</th>
+                      <th class="text-center" style="width:40%">SubTotal</th>
+                      
+                    </tr>
+
+                    <tr *ngFor="let denominacion of lstDenominaciones; let i =index">
+                      <td class="text-center">{{lstDenominaciones[i]}}</td>
+                        <td  style="text-align:center;">
+                          <div>
+                          <input readonly [(ngModel)]="lstCantidadesCaja[i]" (change)="calcularTotal()" 
+                          class="form-control form-control-sm" type="number" min="0">
+                        </div>
+                        </td>
+
+                        <td class="text-center">{{calcularSubTotal(lstDenominaciones[i],lstCantidadesCaja[i],i)}}</td>
+                    </tr>                    
+                </table>
+            </div>
+
+            <div *ngIf="this.active==2" class="table-responsive"  >
+              <table  class="table table-bordered table-md" >
+                  <tr>
+                    <th class="text-center " style="width:40%">Denominación</th>
+                    <th class="text-center" style="width:10%">Cantidad</th>
+                    <th class="text-center" style="width:40%">SubTotal</th>
+                    
+                  </tr>
+
+                  <tr *ngFor="let denominacion of lstDenominaciones; let i =index">
+                    <td class="text-center">{{lstDenominaciones[i]}}</td>
+                      <td  style="text-align:center;">
+                        <div>
+                        <input readonly [(ngModel)]="lstCantidadesCajaCerrar[i]" 
+                        class="form-control form-control-sm" type="number" min="0">
+                      </div>
+                      </td>
+
+                      <td class="text-center">{{calcularSubTotal(lstDenominaciones[i],lstCantidadesCajaCerrar[i],i)}}</td>
+                  </tr>                    
+              </table>
+          </div>
+
+          </div>
+        </div>
+      </div>
+          <div *ngIf="this.active==1" class="row">
+            <div class="col-12 col-md-6 col-lg-6"><label  style="float: right; font-size: x-large;" >Total</label></div>
+            <div class="col-12 col-md-6 col-lg-6"><label style="font-size: x-large;" >{{totalGrilla}}</label></div>  
+        </div>
+        <div *ngIf="this.active==2" class="row">
+          <div class="col-12 col-md-6 col-lg-6"><label  style="float: right; font-size: x-large;" >Total</label></div>
+          <div class="col-12 col-md-6 col-lg-6"><label style="font-size: x-large;" >{{totalGrillaCerrar}}</label></div>  
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

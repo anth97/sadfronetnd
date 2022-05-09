@@ -1,0 +1,133 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Chartjs</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Charts</li>
+    <li class="breadcrumb-item">Chartjs</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Line chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart [chartType]="'line'" [datasets]="lineChartData" [labels]="lineChartLabels"
+                [options]="lineChartOptions" [legend]="true">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>line Chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart [chartType]="'line'" [datasets]="areaChartData" [labels]="areaChartLabels"
+                [options]="areaChartOptions" [legend]="true">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Bar chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart class="chart" [datasets]="barChartData" [labels]="barChartLabels"
+                [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend"
+                [chartType]="barChartType"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Radar Chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart class="chart" [datasets]="radarChartData" [labels]="radarChartLabels"
+                [options]="radarChartOptions" [chartType]="radarChartType" [colors]="radarChartColors"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Doughut Chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart class="chart" [data]="doughnutChartData" [labels]="doughnutChartLabels"
+                [options]="doughnutChartOptions" [chartType]="doughnutChartType"
+                [colors]="doughnutChartColors"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Bubble Chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart [datasets]="bubbleChartData" [options]="bubbleChartOptions" [legend]="bubbleChartLegend"
+                [chartType]="bubbleChartType">
+              </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Polar Chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart class="chart" [data]="polarAreaChartData" [options]="polarChartOptions"
+                [labels]="polarAreaChartLabels" [legend]="polarAreaLegend" [chartType]="polarAreaChartType"
+                [colors]="ploarChartColors"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Pie Chart</h4>
+          </div>
+          <div class="card-body">
+            <div class="recent-report__chart">
+              <canvas baseChart class="chart" [data]="pieChartData" [labels]="pieChartLabels"
+                [options]="pieChartOptions" [chartType]="pieChartType" [colors]="pieChartColors"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

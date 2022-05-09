@@ -1,0 +1,470 @@
+<section class="main-content">
+  <div style="margin-top: 20px"></div>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4 style="font-size: 1.6em" *ngIf="!isFromBienComun">Registro Predio</h4>
+            <h4 style="font-size: 1.6em" *ngIf="isFromBienComun">Registro Bien Común</h4>
+            &nbsp;
+            <div *ngIf="!isFromBienComun">
+              <span *ngIf="lstDirec">{{
+                via(lstDirec.prediourbano.cod_tipo_via)
+              }}</span>
+              <span *ngIf="lstDirec"
+                >&nbsp;{{ lstDirec.prediourbano.direccion }}</span
+              >
+              <span *ngIf="lstDirec"
+                >&nbsp;{{ lstDirec.prediourbano.numero }}</span
+              >
+              <span *ngIf="lstDirec"
+                >&nbsp;int.{{ lstDirec.prediourbano.interior }}</span
+              >
+              <span *ngIf="lstDirec"
+                >&nbsp;Mz.{{ lstDirec.prediourbano.manzana }}</span
+              >
+              <span *ngIf="lstDirec"
+                >&nbsp;Lt.{{ lstDirec.prediourbano.lote }}</span
+              >
+            </div>
+            
+          </div>
+
+          <div class="card-body">
+            <div class="stepper-wrapper">
+              <div class="stepper-item completed">
+                <div class="step-counter">1</div>
+                <div class="step-name">DATOS DEL PREDIO</div>
+              </div>
+              <div class="stepper-item completed">
+                <div class="step-counter">2</div>
+                <div class="step-name">V. CONSTRUCCIÓN</div>
+              </div>
+              <div class="stepper-item active">
+                <div class="step-counter active">3</div>
+                <div class="step-name">COMPLEMENTOS</div>
+              </div>
+              <div class="stepper-item">
+                <div class="step-counter">4</div>
+                <div class="step-name">ÁREA COMÚN</div>
+              </div>
+              <div class="stepper-item" *ngIf="!isFromBienComun">
+                <div class="step-counter">5</div>
+                <div class="step-name">PROPIETARIO</div>
+              </div>
+              <div class="stepper-item" *ngIf="isFromBienComun">
+                <div class="step-counter">5</div>
+                <div class="step-name">COPROPIETARIO</div>
+              </div>
+            </div>
+            <form
+              class="register-form m-4"
+              [formGroup]="form"
+              (ngSubmit)="onRegister()"
+            >
+              <div class="section-title mt-0"><b>Obras Complementarias</b></div>
+
+              <div class="row">
+                <div class="form-group">
+                  <label>Descripción<span class="text-danger">*</span></label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder=""
+                    maxlength="150"
+                    formControlName="descripcion"
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !form.get('descripcion').valid &&
+                        form.get('descripcion').touched
+                    }"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col form-group">
+                  <label
+                    >Material Predominante<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
+                  <select
+                    id="codigoTipoZona"
+                    class="form-select form-select-sm"
+                    formControlName="cod_estructura_predominante"
+                  >
+                    <option disabled>Seleccione una opción</option>
+                    <option
+                      *ngFor="let material of lsEstrucPre"
+                      [ngValue]="material.codigo"
+                    >
+                      {{ material.denominacion }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col form-group">
+                  <label
+                    >Estado Conservación<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
+                  <select
+                    id="codigoTipoZona"
+                    class="form-select form-select-sm"
+                    formControlName="cod_estado_conservacion"
+                  >
+                    <option disabled>Seleccione una opción</option>
+                    <option
+                      *ngFor="let conservacion of lstEstadoConser"
+                      [ngValue]="conservacion.codigo"
+                    >
+                      {{ conservacion.denominacion }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group form-group col-md-2">
+                  <label
+                    >Fecha de Construcción<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    type="date"
+                    class="form-control form-control-sm"
+                    formControlName="fec_inicio_vigencia"
+                    placeholder="date"
+                  />
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label>Antigüedad(años)</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    readonly
+                    formControlName="antiguedad"
+                    value="{{ antiguedad }} "
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col form-group">
+                  <label>Clasificación<span class="text-danger">*</span></label>
+                  <select
+                    id="codigoTipoZona"
+                    class="form-select form-select-sm"
+                    (change)="onChangeMedida()"
+                    formControlName="cod_clasificacion_obra_complementaria"
+                  >
+                    <option disabled>Seleccione una opción</option>
+                    <option
+                      *ngFor="let clasificacion of lstClasificacion"
+                      [ngValue]="clasificacion.codigo"
+                    >
+                      {{ clasificacion.denominacion }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="col form-group">
+                  <label
+                    >Estado Construcción<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
+                  <select
+                    id="codigoTipoZona"
+                    class="form-select form-select-sm"
+                    formControlName="cod_estado_construccion"
+                  >
+                    <option disabled>Seleccione una opción</option>
+                    <option
+                      *ngFor="let estado of lstEstadoConstrucc"
+                      [ngValue]="estado.codigo"
+                    >
+                      {{ estado.denominacion }}
+                    </option>
+                  </select>
+                </div>
+
+                <div class="form-group form-group col-md-2">
+                  <label>Metrado<span class="text-danger">*</span></label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder=""
+                    date
+                    (keypress)="InputNumber($event)"
+                    maxlength="15"
+                    formControlName="metrado"
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !form.get('metrado').valid &&
+                        form.get('metrado').touched
+                    }"
+                  />
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label>Unidad de Medida</label>
+                  <select
+                    id="codigoTipoZona"
+                    class="form-select form-select-sm"
+                    formControlName="cod_unidad_medida"
+                  >
+                    <option disabled>Seleccione una opción</option>
+                    <option
+                      *ngFor="let unidad of lstUnidadMedida"
+                      [ngValue]="unidad.codigo"
+                      (change)="abrevia(unidad.abreviatura)"
+                    >
+                      {{ unidad.denominacion }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group form-group col-md">
+                  <label>Largo(m)<span class="text-danger">*</span></label>
+                  <input
+                    formControlName="largo"
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder=""
+                    (keypress)="InputNumber($event)"
+                    maxlength="15"
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !form.get('largo').valid && form.get('largo').touched
+                    }"
+                  />
+                </div>
+
+                <div class="form-group form-group col-md">
+                  <label>Ancho(m)<span class="text-danger">*</span></label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="ancho"
+                    placeholder=""
+                    (keypress)="InputNumber($event)"
+                    maxlength="15"
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !form.get('ancho').valid && form.get('ancho').touched
+                    }"
+                  />
+                </div>
+
+                <div class="form-group form-group col-md">
+                  <label>Alto(m)<span class="text-danger">*</span></label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="alto"
+                    (keypress)="InputNumber($event)"
+                    maxlength="15"
+                    placeholder=""
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !form.get('alto').valid && form.get('alto').touched
+                    }"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group form-group col-md">
+                  <label>
+                    Valor Unitario x Unidad de Medida<span class="text-danger"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    type="text"
+                    (keypress)="InputNumber($event)"
+                    maxlength="15"
+                    class="form-control form-control-sm"
+                    placeholder=""
+                    date
+                    formControlName="valor_unitario"
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !form.get('valor_unitario').valid &&
+                        form.get('valor_unitario').touched
+                    }"
+                  />
+                </div>
+
+                <div class="form-group form-group col-md">
+                  <label>
+                    %Depreciación<span class="text-danger">*</span></label
+                  >
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    formControlName="porcent_depreciado"
+                    (keypress)="InputNumber($event)"
+                    maxlength="6"
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !form.get('porcent_depreciado').valid &&
+                        form.get('porcent_depreciado').touched
+                    }"
+                  />
+                </div>
+
+                <div class="form-group col-md">
+                  <label>Valor Depreciación</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    readonly
+                    value="{{ Depreciacion }}"
+                    formControlName="valor_depreciado"
+                  />
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label>Valor de la Construcción</label>
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    value="{{ Construccion }}"
+                    readonly
+                    formControlName="valor_construccion"
+                  />
+                </div>
+              </div>
+            </form>
+
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button
+                class="btn btn-success btn-sm"
+                [disabled]="!form.valid"
+                (click)="save()"
+                style="width: 8%; margin-right: 2.2em"
+              >
+                Agregar
+              </button>
+            </div>
+            <br />
+            <br />
+            <br />
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-md">
+                <tr>
+                  <th style="text-align: start">Descripción</th>
+                  <th style="text-align: center">Metrado</th>
+                  <th style="text-align: center">UM</th>
+                  <th style="text-align: center">Valor Unitario x UM</th>
+                  <th style="text-align: center">
+                    Valor Unit. Depreciado x UM
+                  </th>
+                  <th style="text-align: center">Valor Construcción</th>
+                  <th
+                    style="
+                      text-align: center;
+                      float: right;
+                      margin-right: 4.5em;
+                    "
+                  >
+                    Acción
+                  </th>
+                </tr>
+
+                <tr *ngFor="let item of lstPredioComplementos">
+                  <td style="text-align: start">{{ item.descripcion }}</td>
+                  <td style="text-align: center">{{ item.metrado }}</td>
+                  <td style="text-align: center">
+                    {{ abrevia(item.cod_unidad_medida) }}
+                  </td>
+                  <td style="text-align: center">{{ item.valor_unitario }}</td>
+                  <td style="text-align: center">
+                    {{ item.valor_depreciado }}
+                  </td>
+                  <td style="text-align: center">
+                    {{ item.valor_construccion }}
+                  </td>
+
+                  <td style="text-align: center; float: right">
+                    <div class="buttons">
+                      <a
+                        class="msr-2 h-auto tblViewBtn"
+                        (click)="clickA(item, 'view')"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </a>
+
+                      <a
+                        class="msr-2 h-auto tblEditBtn"
+                        (click)="clickA(item, 'update')"
+                      >
+                        <i class="fas fa-pen"></i>
+                      </a>
+
+                      <a class="h-auto tblDelBtn" (click)="delete(item.id)">
+                        <i class="far fa-trash-alt"></i>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+
+            <div class="card-footer">
+              <div class="row">
+                <div class="form-group col-md-6"></div>
+                <div class="form-group col-md-3">
+                  <label style="font-size: 1em; float: right; margin-top: 5px"
+                    >VALOR TOTAL OBRAS COMPLEMENTARIAS
+                  </label>
+                </div>
+                <div class="form-group col-md-2">
+                  <input
+                    type="text"
+                    style="margin-left: 1.8em"
+                    class="form-control form-control-sm"
+                    placeholder=""
+                    disabled
+                    value="{{ valorTotal() }}"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button  (click)="navegar(2)"
+                    class="btn btn-primary btn-sm"
+                  >
+                    Atras
+                  </button>
+                  <button (click)="navegar(4)"
+                    class="btn btn-success btn-sm"
+                  >
+                    Siguiente
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

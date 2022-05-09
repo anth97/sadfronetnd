@@ -1,0 +1,220 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Wizard</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Forms</li>
+    <li class="breadcrumb-item">Wizard</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Wizard With Icons</h4>
+          </div>
+          <div class="card-body">
+            <aw-wizard [navBarLayout]="'large-empty-symbols'">
+              <aw-wizard-step>
+                <ng-template awWizardStepSymbol>
+                  <i class="far fa-envelope"></i>
+                </ng-template>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Email</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="email" type="text" placeholder="Enter email">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Username</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="username" type="text" placeholder="Enter Username">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Password</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="password" type="password" placeholder="Enter Password">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul class="list-inline wizard mb-0">
+                  <li class="next list-inline-item float-end"><button class="btn btn-primary" awNextStep>Next</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+
+              <aw-wizard-step>
+                <ng-template awWizardStepSymbol>
+                  <i class="fas fa-user-tie"></i>
+                </ng-template>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">First name</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="email" type="text" placeholder="Enter email">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Last name</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="username" type="text" placeholder="Enter Username">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Password</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="password" type="password" placeholder="Enter Password">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul class="list-inline wizard mb-0">
+                  <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                  </li>
+                  <li class="next list-inline-item float-end"><button class="btn btn-primary" awNextStep>Next</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+
+              <aw-wizard-step>
+                <ng-template awWizardStepSymbol>
+                  <i class="fas fa-check-circle"></i>
+                </ng-template>
+                <div class="p-3">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="cb6">
+                      <label class="form-check-label" for="cb6">
+                        I agree with the Terms and
+                        Conditions.
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <ul class="list-inline wizard mb-0">
+                  <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+            </aw-wizard>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Wizard With Title</h4>
+          </div>
+          <div class="card-body">
+            <aw-wizard [navBarLayout]="'large-empty-symbols'">
+              <aw-wizard-step stepTitle="Personal Details">
+                <ng-template awWizardStepSymbol>1</ng-template>
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Name</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="pname" type="text" id="pname">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Address</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="paddress" type="text" id="paddress">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Mobile No.</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="pmobile" type="number" id="pmobile">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <ul class="list-inline wizard mb-0">
+                  <li class="next list-inline-item float-end"><button class="btn btn-primary" awNextStep>Next</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+
+              <aw-wizard-step stepTitle="Work Details">
+                <ng-template awWizardStepSymbol>2</ng-template>
+
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Company Name</label>
+                      <div class="col-md-9">
+                        <input class="form-control" name="cname" type="text">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-3 col-form-label" for="department">Department</label>
+                      <div class="col-md-9">
+                        <select id="department" name="department" class="form-control">
+                          <option value="">--Please Select--</option>
+                          <option value="MK">Marketing</option>
+                          <option value="DP">Development</option>
+                          <option value="DE">Design</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Salary</label>
+                      <div class="col-md-9">
+                        <input id="salary" class="form-control" name="salary" type="number">
+                      </div>
+                    </div>
+                    <div class="form-group row mb-3">
+                      <label class="col-md-3 col-form-label">Joining Date</label>
+                      <div class="col-md-9">
+                        <input id="jdate" class="form-control" name="jdate" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <ul class="list-inline wizard mb-0">
+                  <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                  </li>
+                  <li class="next list-inline-item float-end"><button class="btn btn-primary" awNextStep>Next</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+
+              <aw-wizard-step stepTitle="Confirm Detail">
+                <ng-template awWizardStepSymbol>3</ng-template>
+                <div class="p-3">
+                  <div class="form-group">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="cb1">
+                      <label class="form-check-label" for="cb1">
+                        I agree with the Terms and
+                        Conditions.
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <ul class="list-inline wizard mb-0">
+                  <li class="previous list-inline-item"><button class="btn btn-primary" awPreviousStep>Previous</button>
+                  </li>
+                </ul>
+              </aw-wizard-step>
+            </aw-wizard>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

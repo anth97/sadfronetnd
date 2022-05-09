@@ -1,0 +1,137 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Apexchart</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Charts</li>
+    <li class="breadcrumb-item">Apexchart</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Bar chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="barChartOptions.series" [chart]="barChartOptions.chart"
+                [dataLabels]="barChartOptions.dataLabels" [plotOptions]="barChartOptions.plotOptions"
+                [grid]="barChartOptions.grid" [yaxis]="barChartOptions.yaxis" [legend]="barChartOptions.legend"
+                [fill]="barChartOptions.fill" [stroke]="barChartOptions.stroke" [tooltip]="barChartOptions.tooltip"
+                [xaxis]="barChartOptions.xaxis">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Bar Chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="barChart2Options.series" [chart]="barChart2Options.chart"
+                [dataLabels]="barChart2Options.dataLabels" [plotOptions]="barChart2Options.plotOptions"
+                [grid]="barChart2Options.grid" [yaxis]="barChart2Options.yaxis" [xaxis]="barChart2Options.xaxis"
+                [fill]="barChart2Options.fill" [title]="barChart2Options.title"></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Line chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="lineChartOptions.series" [chart]="lineChartOptions.chart"
+                [grid]="lineChartOptions.grid" [xaxis]="lineChartOptions.xaxis" [title]="lineChartOptions.title">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Line Chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="lineChart2Options.series" [chart]="lineChart2Options.chart"
+                [grid]="lineChart2Options.grid" [xaxis]="lineChart2Options.xaxis" [title]="lineChart2Options.title">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Line & Column Chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="lineColumnChartOptions.series" [chart]="lineColumnChartOptions.chart"
+                [grid]="lineColumnChartOptions.grid" [xaxis]="lineColumnChartOptions.xaxis"
+                [title]="lineColumnChartOptions.title"></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Area Chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="areaChartOptions.series" [chart]="areaChartOptions.chart"
+                [grid]="areaChartOptions.grid" [xaxis]="areaChartOptions.xaxis" [title]="areaChartOptions.title">
+              </apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Pie Chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="pieChartOptions.series" [chart]="pieChartOptions.chart"
+                [title]="pieChartOptions.title"></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Radar Chart</h4>
+          </div>
+          <div class="card-body">
+            <div style="text-align:center">
+              <apx-chart [series]="radarChartOptions.series" [chart]="radarChartOptions.chart"
+                [title]="radarChartOptions.title"></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

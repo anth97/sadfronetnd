@@ -1,0 +1,119 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Accordion</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">UI</li>
+    <li class="breadcrumb-item">Accordion</li>
+  </ul>
+  <div class="section-body">
+    <div class="card">
+      <div class="card-header">
+        <h4>Accordion</h4>
+      </div>
+      <div class="card-body">
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0">
+          <ngb-panel title="Simple">
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel>
+            <ng-template ngbPanelTitle>
+              <span>&#9733; <b>Fancy</b> title &#9733;</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel title="Disabled" [disabled]="true">
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h4>One open panel at a time</h4>
+      </div>
+      <div class="card-body">
+        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+          <ngb-panel id="static-1" title="Simple">
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel id="static-2">
+            <ng-template ngbPanelTitle>
+              <span>&#9733; <b>Fancy</b> title &#9733;</span>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel id="static-3" title="Disabled" [disabled]="true">
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h4>Custom header</h4>
+      </div>
+      <div class="card-body">
+        <ngb-accordion #a="ngbAccordion" activeIds="custom-panel-1">
+          <ngb-panel id="custom-panel-1">
+            <ng-template ngbPanelHeader let-opened="opened">
+              <div class="d-flex align-items-center justify-content-between">
+                <h5 class="m-0">First panel - {{ opened ? 'opened' : 'collapsed' }}</h5>
+                <button ngbPanelToggle class="btn btn-link p-0">Toggle first</button>
+              </div>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel>
+            <ng-template ngbPanelHeader>
+              <div class="d-flex align-items-center justify-content-between">
+                <h5 class="m-0">Second panel</h5>
+                <div class="accordion-btn">
+                  <button ngbPanelToggle class="btn btn-sm btn-outline-primary msl-2">Toggle second</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary msl-2" (click)="disabled = !disabled">
+                    {{ disabled ? 'En' : 'Dis' }}able third
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-danger msl-2" (click)="a.collapseAll()">Collapse
+                    all</button>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel [disabled]="disabled" [cardClass]="disabled ? 'disabled' : ''">
+            <ng-template ngbPanelHeader>
+              <div class="d-flex align-items-center justify-content-between">
+                <button ngbPanelToggle class="btn btn-link container-fluid text-start pl-0">Third panel</button>
+                <p *ngIf="disabled" class="text-muted m-0 small">[I'm&nbsp;disabled]</p>
+              </div>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              {{content}}
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+
+      </div>
+    </div>
+  </div>
+</section>

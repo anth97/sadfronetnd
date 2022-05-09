@@ -1,0 +1,131 @@
+<section class="main-content">
+    <div style="margin-top: 20px"></div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card" #content>
+                    <div class="card-header">
+                        <h4>Registro Bien Común</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="stepper-wrapper">
+                            <div class="stepper-item completed">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">2</div>
+                                <div class="step-name">V. CONSTRUCCIÓN</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">3</div>
+                                <div class="step-name">COMPLEMENTOS</div>
+                            </div>
+                            <div class="stepper-item active">
+                                <div class="step-counter">4</div>
+                                <div class="step-name">ÁREA COMÚN</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">5</div>
+                                <div class="step-name">COPROPIETARIO</div>
+                            </div>
+                        </div>
+                        <form ngForm [formGroup]="form">
+                            <h6>Predio Bien Común</h6>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Tipo del Bien</label>
+                                    <select class="form-select form-select-sm" formControlName="cod_tipo_bien_comun" 
+                                    [ngClass]="{
+                                        'is-invalid': !form.get('cod_tipo_bien_comun').valid && form.get('cod_tipo_bien_comun').touched              
+                                    }">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablas" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label>Descripción</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Descripción"
+                                        formControlName="descripcion"
+                                        [ngClass]="{
+                                            'is-invalid': !form.get('descripcion').valid && form.get('descripcion').touched              
+                                        }">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-2" >
+                                    <label>Fecha de Inicio</label>
+                                    <input type="date" class="form-control form-control-sm"
+                                        formControlName="fec_inicio_vigencia"
+                                        [ngClass]="{
+                                            'is-invalid': !form.get('fec_inicio_vigencia').valid && form.get('fec_inicio_vigencia').touched              
+                                        }">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Antiguedad(años)</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0"
+                                        value="{{antiguedad}}" readonly>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Piso</label>
+                                    <input type="text" class="form-control form-control-sm" 
+                                        maxlength="5"
+                                        (keypress)="InputNumber($event)"
+                                        formControlName="num_piso" 
+                                        [ngClass]="{
+                                            'is-invalid': !form.get('num_piso').valid && form.get('num_piso').touched              
+                                        }">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Valor del Bien</label>
+                                    <input type="number" class="form-control form-control-sm"
+                                        formControlName="valor_bien_comun" readonly>
+                                </div>                               
+
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Valor del Terreno</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0.00"
+                                        formControlName="monto_valor_terreno" readonly>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Valor de la Construcción</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0.00"
+                                        formControlName="monto_valor_const" readonly>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Valor de la Obra Complementaria</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0.00"
+                                        formControlName="monto_valor_obra_comple" readonly>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button class="btn btn-primary btn-sm"
+                                        (click)="updatePredio(3)">Atras</button>
+                                    &nbsp;
+                                    <button 
+                                        class="btn btn-success btn-sm" 
+                                        *ngIf="!loadSiguiente"
+                                        (click)="save()">
+                                        Siguiente
+                                    </button>
+                                    <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="loadSiguiente">
+                                        <span class="sr-only">Loading...</span>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [disabled]="!form.valid"  -->
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+</section>

@@ -1,0 +1,228 @@
+<section class="main-content">
+    <ul class="breadcrumb breadcrumb-style ">
+        <li class="breadcrumb-item">
+            <h5 class="page-title m-b-0">Predio</h5>
+        </li>
+        <li class="breadcrumb-item bcrumb-1">
+            <a routerLink="/dashboard/main">
+                <i class="fas fa-home font-17"></i></a>
+        </li>
+        <li class="breadcrumb-item">Nuevo urbano</li>
+        <li class="breadcrumb-item">Propietario</li>
+    </ul>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4> Registro Bien Común</h4> &nbsp;
+                    </div>
+                    <div class="card-body">
+                        <div class="stepper-wrapper">
+                            <div class="stepper-item completed">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">2</div>
+                                <div class="step-name">V. CONSTRUCCIÓN</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">3</div>
+                                <div class="step-name">COMPLEMENTOS</div>
+                            </div>
+                            <div class="stepper-item completed">
+                                <div class="step-counter">4</div>
+                                <div class="step-name">ÁREA COMÚN</div>
+                            </div>
+                            <div class="stepper-item active">
+                                <div class="step-counter">5</div>
+                                <div class="step-name">COPROPIETARIO</div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <h4>Copropietarios</h4>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label>Codigo de Predio</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control form-control-sm"
+                                    [(ngModel)]="codPredioBusqueda" [readonly]="loadBusqueda">
+                                    <button class="btn btn-outline-secondary btn-sm"
+                                    (click)="buscarPredio()">
+                                      <i class="fas fa-search"></i>
+                                  </button>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="table-responsive">
+                            <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="loadBusqueda">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            <table class="table table-bordered table-sm" *ngIf="!loadBusqueda">
+                                <tr>
+                                    <th>Nro</th>
+                                    <th>Tipo Predio</th>
+                                    <th>Dirección / Referencia</th>
+                                    <th>Contribuyente</th>
+                                </tr>
+                                <tr *ngFor="let item of lstPrediosBusqueda">
+                                    <td>1</td>
+                                    <td *ngIf="item.prediourbano">Urbano</td>
+                                    <td *ngIf="item.prediorustico">Urbano</td>
+                                    <td>{{getDireccion(item.prediourbano)}}</td>
+                                    <td>
+                                        {{getContribString(item.prediocontribuyente_set)}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <form [formGroup]="formCompartido">
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>% Terreno</label>
+                                    <input type="text" 
+                                    maxlength="6"
+                                    (keypress)="InputNumber($event)"
+                                    class="form-control form-control-sm"
+                                    formControlName="porcent_terreno"
+                                    value="{{this.formCompartido.get('porcent_terreno').value}}"
+                                    [ngClass]="{
+                                        'is-invalid': !formCompartido.get('porcent_terreno').valid && formCompartido.get('porcent_terreno').touched              
+                                    }"
+                                    >
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>% Construcción</label>
+                                    <input type="text" 
+                                    maxlength="6"
+                                    (keypress)="InputNumber($event)"
+                                    class="form-control form-control-sm"
+                                    formControlName="porcent_terreno" 
+                                    value="{{this.formCompartido.get('porcent_terreno').value}}"
+                                    [ngClass]="{
+                                        'is-invalid': !formCompartido.get('porcent_terreno').valid && formCompartido.get('porcent_terreno').touched              
+                                    }"
+                                    >
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>% Obras Complementarias</label>
+                                    <input type="text" 
+                                    maxlength="6"
+                                    (keypress)="InputNumber($event)"
+                                    value="{{this.formCompartido.get('porcent_terreno').value}}"
+                                    class="form-control form-control-sm"
+                                    formControlName="porcent_terreno" 
+                                    [ngClass]="{
+                                        'is-invalid': !formCompartido.get('porcent_terreno').valid && formCompartido.get('porcent_terreno').touched              
+                                    }"
+                                    >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Valor Terreno</label>
+                                    <input type="number" 
+                                    class="form-control form-control-sm"
+                                    value="{{valorTerreno}}"
+                                    readonly
+                                    >
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Valor Construcción</label>
+                                    <div class="spinner-border text-info" role="status" style="width: 1rem; height: 1rem;" *ngIf="loadInitialData">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <input type="number" 
+                                    class="form-control form-control-sm"
+                                    value="{{valorConstr}}"
+                                    readonly
+                                    >
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Valor Obras Complementarias</label>
+                                    <input type="number" 
+                                    class="form-control form-control-sm"
+                                    value="{{valorObra}}"
+                                    readonly
+                                    >
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">                                    
+                                    <button 
+                                        class="btn btn-success btn-sm" 
+                                        *ngIf="!loadAgregar"
+                                        (click)="save()">
+                                        Agregar
+                                    </button>
+                                    <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="loadAgregar">
+                                        <span class="sr-only">Loading...</span>
+                                      </div>
+                                </div>
+                            </div>
+                        </form>
+                        <br>
+                        <div class="table-responsive">
+                            <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="loadLstCompartido">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            <table class="table table-bordered table-sm" *ngIf="!loadLstCompartido">
+                                <tr>
+                                    <th>Nro</th>
+                                    <th>Contribuyente</th>
+                                    <th>Valor del bien</th>
+                                    <th>%</th>
+                                    <th>Valor Porcentual</th>
+                                    <th>Acción</th>
+                                </tr>
+                                <tr *ngFor="let item of lstCompartido; let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{getContribString(item.prediocontribuyente_set)}}</td>
+                                    <td>{{item.monto_valor_porcent_obra_compl*100/item.porcent_terreno}}</td>
+                                    <td>{{item.porcent_terreno}}
+                                    </td>
+                                    <!--review this-->
+                                    <td>{{item.monto_valor_porcent_obra_compl}}</td>
+                                    <td>
+                                        <div class="buttons">
+                                            <button class="btn btn-icon btn-outline-success btn-sm"
+                                                (click)="startModalCoPropietario('item')"><i class="far fa-edit"></i></button>
+                                            <button class="btn btn-icon btn-outline-danger btn-sm"
+                                                (click)="delete('id')"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button class="btn btn-primary btn-sm"
+                                *ngIf="!loadAtras"
+                                    (click)="clickAtras()">Atrás
+                                </button>
+                                &nbsp;
+                                <button 
+                                    class="btn btn-success btn-sm"             
+                                    (click)="clickFinalizar()">
+                                    Finalizar
+                                </button>
+                                <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="loadAtras">
+                                    <span class="sr-only">Loading...</span>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

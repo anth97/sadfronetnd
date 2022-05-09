@@ -1,0 +1,287 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Validation</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Forms</li>
+    <li class="breadcrumb-item">Form Validation</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Form Validation</h4>
+          </div>
+          <div class="card-body">
+            <form class="register-form m-4" [formGroup]="register" (ngSubmit)="onRegister()">
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label>First name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" placeholder="First name" formControlName="first" required>
+                  <small class="form-text text-danger"
+                    *ngIf="!register.get('first').valid && register.get('first').touched">Please
+                    enter a first name!</small>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>Last Name</label>
+                  <input type="text" class="form-control" placeholder="Last Name" formControlName="last">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label>Password<span class="text-danger">*</span></label>
+                  <input type="password" class="form-control" placeholder="Password" formControlName="password"
+                    required>
+                  <small class="form-text text-danger"
+                    *ngIf="!register.get('password').valid && register.get('password').touched">password length must be
+                    between 3 and 15 !</small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label>Email<span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" placeholder="Email" formControlName="email" required>
+                  <small class="form-text text-danger"
+                    *ngIf="!register.get('email').valid && (register.get('email').dirty || register.get('email').touched)">
+                    Enter velid email address!</small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label>Address<span class="text-danger"></span></label>
+                  <textarea type="textitem" class="form-control" placeholder="Address"
+                    formControlName="address"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <label>City<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" placeholder="City" formControlName="city" required>
+                  <small class="form-text text-danger"
+                    *ngIf="!register.get('city').valid && register.get('city').touched">Please
+                    enter a city name!</small>
+                </div>
+                <div class="form-group col-md-6">
+                  <label>State<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" placeholder="State" formControlName="state" required>
+                  <small class="form-text text-danger"
+                    *ngIf="!register.get('state').valid && register.get('state').touched">Please
+                    enter a state name!</small>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <label>Country<span class="text-danger">*</span></label>
+                  <select class="form-control" formControlName="country" required>
+                    <option>India</option>
+                    <option>Algeria</option>
+                    <option>Brazil</option>
+                    <option>Poland</option>
+                    <option>Sri Lanka</option>
+                    <option>Thailand</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cb6" formControlName="termcondition">
+                  <label class="form-check-label" for="cb6">
+                    I accept terms and conditions
+                  </label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                  <button class="btn btn-primary msr-3" [disabled]="!register.valid">Submit</button>
+                  <button class="btn btn-danger">Cancel</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Custom Validations</h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <form>
+                <div class="form-group">
+                  <label for="required">required</label>
+                  <input type="text" class="form-control" ngModel name="required" #required="ngModel" required
+                    placeholder="required" />
+                  <small class="form-text text-danger" *ngIf="required.errors?.required">required error</small>
+                </div>
+                <div class="form-group">
+                  <label for="minlength">minlength</label>
+                  <input type="text" class="form-control" ngModel name="minlength" #minlength="ngModel"
+                    placeholder="minlength 4" minlength="4" />
+                  <small class="form-text text-danger" *ngIf="minlength.errors?.minlength">minlength error</small>
+                </div>
+                <div class="form-group">
+                  <label for="maxlength">maxlength</label>
+                  <input type="text" class="form-control" ngModel name="maxlength" #maxlength="ngModel"
+                    placeholder="maxlength 4" maxlength="4" />
+                  <small class="form-text text-danger" *ngIf="maxlength.errors?.maxlength">required error</small>
+                </div>
+                <div class="form-group">
+                  <label for="rangelength">rangelength</label>
+                  <input type="text" class="form-control" ngModel name="rangelength" #rangelength="ngModel"
+                    placeholder="rangeLength [5, 10]" [rangeLength]="[5, 10]" />
+                  <small class="form-text text-danger" *ngIf="rangelength.errors?.rangeLength">rangelength
+                    error</small>
+                </div>
+                <div class="form-group">
+                  <label for="pattern">pattern</label>
+                  <input type="text" class="form-control" ngModel name="pattern" #pattern="ngModel"
+                    placeholder="[a-z]{6}" pattern="[a-z]{6}" />
+                  <small class="form-text text-danger" *ngIf="pattern.errors?.pattern">pattern error</small>
+                </div>
+                <div class="form-group">
+                  <label for="base64">base64</label>
+                  <input type="text" class="form-control" ngModel name="base64" #base64="ngModel" placeholder="base64"
+                    base64 />
+                  <small class="form-text text-danger" *ngIf="base64.errors?.base64">base64 error</small>
+                </div>
+                <div class="form-group">
+                  <label for="creditCard">creditCard</label>
+                  <input type="text" class="form-control" ngModel name="creditCard" #creditCard="ngModel"
+                    placeholder="creditCard" creditCard />
+                  <small class="form-text text-danger" *ngIf="creditCard.errors?.creditCard">creditCard
+                    error</small>
+                </div>
+                <div class="form-group">
+                  <label for="date">date</label>
+                  <input type="date" class="form-control" ngModel name="date" #date="ngModel" placeholder="date" date />
+                  <small class="form-text text-danger" *ngIf="date.errors?.date">date error</small>
+                </div>
+                <div class="form-group">
+                  <label for="dateISO">dateISO</label>
+                  <input type="text" class="form-control" ngModel name="dateISO" #dateISO="ngModel"
+                    placeholder="dateISO" dateISO />
+                  <small class="form-text text-danger" *ngIf="dateISO.errors?.dateISO">dateISO error</small>
+                </div>
+                <div class="form-group">
+                  <label for="maxDate">maxDate (11-05-2020)</label>
+                  <input type="date" class="form-control" ngModel name="maxDate" #maxDate="ngModel"
+                    maxDate="2020-05-11" />
+                  <small class="form-text text-danger" *ngIf="maxDate.errors?.maxDate">maxDate error</small>
+                </div>
+                <div class="form-group">
+                  <label for="minDate">minDate (11-05-2020)</label>
+                  <input type="date" class="form-control" ngModel name="minDate" #minDate="ngModel"
+                    minDate="2020-05-11" />
+                  <small class="form-text text-danger" *ngIf="minDate.errors?.minDate">minDate error</small>
+                </div>
+                <div class="form-group">
+                  <label for="digits">digits</label>
+                  <input type="text" class="form-control" ngModel name="digits" #digits="ngModel" placeholder="digits"
+                    digits />
+                  <small class="form-text text-danger" *ngIf="digits.errors?.digits">digits error</small>
+                </div>
+                <div class="form-group">
+                  <label for="email">email</label>
+                  <input type="text" class="form-control" ngModel name="email" #email="ngModel" placeholder="email"
+                    email />
+                  <small class="form-text text-danger" *ngIf="email.errors?.email">email error</small>
+                </div>
+                <div class="form-group">
+                  <label for="equal">equal</label>
+                  <input type="text" class="form-control" ngModel name="equal" #equal="ngModel"
+                    placeholder="equal to redstar" equal="redstar" />
+                  <small class="form-text text-danger" *ngIf="equal.errors?.equal">equal error</small>
+                </div>
+                <div class="form-group">
+                  <label for="notEqual">notEqual</label>
+                  <input type="text" class="form-control" ngModel name="notEqual" #notEqual="ngModel"
+                    placeholder="not equal to redstar" notEqual="redstar" />
+                  <small class="form-text text-danger" *ngIf="notEqual.errors?.notEqual">notEqual error</small>
+                </div>
+                <div class="form-group">
+                  <label for="password">equalTo</label>
+                  <input type="text" class="form-control" ngModel name="password" #password="ngModel"
+                    placeholder="password" required />
+                  <small class="form-text text-danger" *ngIf="password.errors?.required">required error</small>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" ngModel name="equalTo" #equalTo="ngModel"
+                    placeholder="confirm password" [equalTo]="password" />
+                  <small class="form-text text-danger" *ngIf="equalTo.errors?.equalTo">equalTo error</small>
+                </div>
+                <div class="form-group">
+                  <label for="oldPassword">notEqualTo</label>
+                  <input type="text" class="form-control" ngModel name="oldPassword" #oldPassword="ngModel"
+                    placeholder="password" required />
+                  <small class="form-text text-danger" *ngIf="oldPassword.errors?.required">required error</small>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" ngModel name="notEqualTo" #notEqualTo="ngModel"
+                    placeholder="confirm password" [notEqualTo]="oldPassword" />
+                  <small class="form-text text-danger" *ngIf="notEqualTo.errors?.notEqualTo">notEqualTo
+                    error</small>
+                </div>
+                <div class="form-group">
+                  <label for="gt">greater than</label>
+                  <input type="text" class="form-control" ngModel name="gt" #gt="ngModel" placeholder="greater than 20"
+                    gt="20" />
+                  <small class="form-text text-danger" *ngIf="gt.errors?.gt">gt error</small>
+                </div>
+                <div class="form-group">
+                  <label for="lt">less than</label>
+                  <input type="text" class="form-control" ngModel name="lt" #lt="ngModel" placeholder="less than 10"
+                    lt="10" />
+                  <small class="form-text text-danger" *ngIf="lt.errors?.lt">lt error</small>
+                </div>
+                <div class="form-group">
+                  <label for="json">json</label>
+                  <input type="text" class="form-control" ngModel name="json" #json="ngModel" placeholder="json" json />
+                  <small class="form-text text-danger" *ngIf="json.errors?.json">json error</small>
+                </div>
+                <div class="form-group">
+                  <label for="max">max</label>
+                  <input type="text" class="form-control" ngModel name="max" #max="ngModel" placeholder="max 10"
+                    max="10" />
+                  <small class="form-text text-danger" *ngIf="max.errors?.max">max error</small>
+                </div>
+                <div class="form-group">
+                  <label for="min">min</label>
+                  <input type="text" class="form-control" ngModel name="min" #min="ngModel" placeholder="min 10"
+                    min="10" />
+                  <small class="form-text text-danger" *ngIf="min.errors?.min">min error</small>
+                </div>
+                <div class="form-group">
+                  <label for="number">number</label>
+                  <input type="text" class="form-control" ngModel name="number" #number="ngModel" placeholder="number"
+                    number />
+                  <small class="form-text text-danger" *ngIf="number.errors?.number">number error</small>
+                </div>
+                <div class="form-group">
+                  <label for="phone">phone</label>
+                  <input type="text" class="form-control" ngModel name="phone" #phone="ngModel" placeholder="phone"
+                    phone />
+                  <small class="form-text text-danger" *ngIf="phone.errors?.phone">phone error</small>
+                </div>
+                <div class="form-group">
+                  <label for="url">url</label>
+                  <input type="text" class="form-control" ngModel name="url" #url="ngModel" placeholder="url" url />
+                  <small class="form-text text-danger" *ngIf="url.errors?.url">url error</small>
+                </div>
+                <div class="form-group">
+                  <label for="uuid">uuid</label>
+                  <input type="text" class="form-control" ngModel name="uuid" #uuid="ngModel" placeholder="uuid" uuid />
+                  <small class="form-text text-danger" *ngIf="uuid.errors?.uuid">uuid error</small>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

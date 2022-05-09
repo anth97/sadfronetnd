@@ -1,0 +1,160 @@
+<p>nuevo-rustico works!</p>
+<section class="main-content">
+    <div style="margin-top: 20px"></div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="h3" style="margin-left: 25px;">
+                            Registro Predio Rústico &nbsp;
+                        </h3>
+                        <span style="margin-left: 8px; font-size: 16px; margin-bottom: 5px;" *ngIf="depart && prov && distri">
+                            {{depart.denominacion |slice:0:1}}{{depart.denominacion.toLowerCase() |slice:1}}&nbsp;/&nbsp;
+                            {{prov.denominacion | slice:0:1}}{{prov.denominacion.toLowerCase() | slice:1}}&nbsp;/&nbsp;
+                            {{distri.denominacion |slice:0:1}}{{distri.denominacion.toLowerCase() |slice:1}}
+                        </span>
+
+                    </div>
+                    <div class="card-body">
+                        <div class="stepper-wrapper">
+                            <div class="stepper-item active">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">2</div>
+                                <div class="step-name">PROPIETARIO</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 style="margin-left: 25px;">Datos del Predio</h6>
+                            <!-- <span *ngIf="errorGetPredio" style="color: red;">{{errorGetPredio}}</span> -->
+                        </div>
+                        <form class="register-form m-4" [formGroup]="register">
+                            <div class="row">
+
+                                <div class="form-group col-md-4">
+                                    <label>Código Catastral</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="" name="codigo_catastral" formControlName="codigo_catastral" maxlength="20" required [ngClass]="{
+                                        'is-invalid':!register.get('codigo_catastral').valid && register.get('codigo_catastral').touched,
+                                        'is-valid':register.get('codigo_catastral').valid && register.get('codigo_catastral').touched}" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Area del Terreno (m2)</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder=" " name="fecha_inicio" formControlName="area_del_terreno" min="0" max="9999999999.99" (keypress)="InputNumber($event)" required [ngClass]="{
+                                        'is-invalid':!register.get('area_del_terreno').valid && register.get('area_del_terreno').touched,
+                                        'is-valid':register.get('area_del_terreno').valid && register.get('area_del_terreno').touched}" />
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Area Construída (m2)</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder=" " name="area_construida" formControlName="area_construida" min="0" max="9999999999.99" (keypress)="InputNumber($event)" required [ngClass]="{
+                                        'is-invalid':!register.get('area_construida').valid && register.get('area_construida').touched,
+                                        'is-valid':register.get('area_construida').valid && register.get('area_construida').touched}" />
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Fecha Inicio</label>
+                                    <input type="date" class="form-control form-control-sm" placeholder=" " name="fecha_inicio" formControlName="fecha_inicio" required [ngClass]="{
+                                        'is-invalid':!register.get('fecha_inicio').valid && register.get('fecha_inicio').touched,
+                                        'is-valid':register.get('fecha_inicio').valid && register.get('fecha_inicio').touched}" />
+                                </div>
+                                <div class="form-group col-md-8">
+                                    <label>Referencia</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder=" " name="referencia" formControlName="referencia" required [ngClass]="{
+                                        'is-invalid':!register.get('referencia').valid && register.get('referencia').touched,
+                                        'is-valid':register.get('referencia').valid && register.get('referencia').touched}" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Categoría Predio Rústico</label>
+                                    <select class="form-select form-select-sm" name="categoria_predio_rustico" formControlName="categoria_predio_rustico" required [ngClass]="{'is-invalid':!register.get('categoria_predio_rustico').valid && register.get('categoria_predio_rustico').touched,
+                                        'is-valid':register.get('categoria_predio_rustico').valid && register.get('categoria_predio_rustico').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                              
+                                        <option *ngFor="let categoriaprediorustico of lstcategoriaprediorustico" [ngValue]="categoriaprediorustico.codigo"
+                                                >{{categoriaprediorustico.denominacion}}
+                                            </option>
+                                            </select>
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Grupo Altitud</label>
+                                    <select class="form-select form-select-sm" name="grupo_altitud" formControlName="grupo_altitud" required [ngClass]="{'is-invalid':!register.get('grupo_altitud').valid && register.get('grupo_altitud').touched,
+                                        'is-valid':register.get('grupo_altitud').valid && register.get('grupo_altitud').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                                
+                                        <option *ngFor="let grupoaltitud of lstgrupoaltitud" [ngValue]="grupoaltitud.codigo"
+                                                >{{grupoaltitud.denominacion}}
+                                            </option>
+                                            </select>
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Grupo Tierra</label>
+                                    <select class="form-select form-select-sm" name="grupo_tierra" formControlName="grupo_tierra" required [ngClass]="{'is-invalid':!register.get('grupo_tierra').valid && register.get('grupo_tierra').touched,
+                                        'is-valid':register.get('grupo_tierra').valid && register.get('grupo_tierra').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let grupotierra of lstgrupotierra" [ngValue]="grupotierra.codigo"
+                                                    >{{grupotierra.denominacion}}
+                                                </option>
+                                            </select>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Código Tipo Explotación</label>
+                                    <select class="form-select form-select-sm" name="codigo_tipo_explotacion" formControlName="codigo_tipo_explotacion" required [ngClass]="{'is-invalid':!register.get('codigo_tipo_explotacion').valid && register.get('codigo_tipo_explotacion').touched,
+                                    'is-valid':register.get('codigo_tipo_explotacion').valid && register.get('codigo_tipo_explotacion').touched}">
+                                    <option value="" selected>Seleccione</option>
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let codigotipoexplotacion of lstcodigotipoexplotacion" [ngValue]="codigotipoexplotacion.codigo"
+                                                        >{{codigotipoexplotacion.denominacion}}
+                                                    </option>
+                                            </select>
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Explotación</label>
+                                    <select class="form-select form-select-sm" name="explotacion" formControlName="explotacion" required [ngClass]="{'is-invalid':!register.get('explotacion').valid && register.get('explotacion').touched,
+                                    'is-valid':register.get('explotacion').valid && register.get('explotacion').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let explotacion of lstexplotacion" [ngValue]="explotacion.id"
+                                                    >{{explotacion.denominacion}}
+                                                </option>
+                                            </select>
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>%Explotación</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder=" " name="explotacion1" formControlName="explotacion1" min="0" max="9999999999.99" (keypress)="InputNumber($event)" required [ngClass]="{
+                                        'is-invalid':!register.get('explotacion1').valid && register.get('explotacion1').touched,
+                                        'is-valid':register.get('explotacion1').valid && register.get('explotacion1').touched}" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <!--button class="btn btn-primary">Cancelar</button-->&nbsp;
+                                    <button class="btn btn-secondary btn-sm" (click)="clicCancelar()">Cancelar
+                                            </button>
+                                    <button type="submit" class="btn btn-success btn-sm" (click)="ClickSiguiente()" *ngIf="!load">Siguiente
+                                            </button>
+                                    <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="load">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

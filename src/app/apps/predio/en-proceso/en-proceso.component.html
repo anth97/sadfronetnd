@@ -1,0 +1,63 @@
+<p>en-proceso works!</p>
+<section class="main-content">
+    <div class="card">
+        <div class="card-body">
+            <h4>Predios en Proceso de Registro</h4>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ngx-datatable class="material" [externalPaging]="true" [count]="page.totalElements" [offset]="page.pageNumber" [limit]="page.size" (page)="setPage($event)" [rows]="rows" [loadingIndicator]="loadingIndicator" columnMode="force" [headerHeight]="50" [footerHeight]="50"
+                            rowHeight="auto" [limit]="page.size">
+                            <ngx-datatable-column [width]="90" name="N°">
+                                <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                                    {{ rowIndex+1 +(page.pageNumber*page.size)}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Fecha">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    {{row.fec_mod| date:'dd/MM/yyyy'}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Tipo Predio">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <div *ngIf="row.prediourbano">Urbano</div>
+                                    <div *ngIf="row.prediorustico">Rústico</div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column [width]="250" name="Dirección / Referencia">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <div *ngIf="row.prediourbano">{{row.prediourbano.direccion}} N°. {{row.prediourbano.numero}} Mz. {{row.prediourbano.manzana}} Lt. {{row.prediourbano.lote}}
+                                    </div>
+                                    <div *ngIf="row.prediorustico">{{row.ref_direccion}}</div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Progreso">
+                                <ng-template text-align="center" let-row="row" ngx-datatable-cell-template>
+                                    {{row.progreso_registro}}
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column [width]="230" name="Usuario">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <div>{{row.usuario_mod.first_name}} {{row.usuario_mod.last_name}}</div>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column name="Acción" sortable="false">
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <a class="msr-2 h-auto tblEditBtn" (click)="edit(row)">
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+                                    <a class="h-auto tblDelBtn" (click)="delete(row.id) ">
+                                        <i class="far fa-trash-alt"></i>
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</section>

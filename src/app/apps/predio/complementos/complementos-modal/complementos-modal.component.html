@@ -1,0 +1,217 @@
+<fieldset [disabled]="isDisabled">
+
+    <form ngForm [formGroup]="form">
+        <h6>Obras complementarias</h6>
+
+        <div class="row">
+            <div class="form-group">
+                <label>Descripción<span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-sm" placeholder="" maxlength="150" formControlName="descripcion"
+                    required [ngClass]="{
+                        'is-invalid':!form.get('descripcion').valid && form.get('descripcion').touched
+                        
+                    }">
+                
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col form-group">
+                <label>Material Predominante<span class="text-danger">*</span></label>
+                <select id="codigoTipoZona" class="form-select form-select-sm"
+                    formControlName="cod_estructura_predominante">
+                    <option disabled>Seleccione una opción</option>
+                    <option *ngFor="let material of lsEstrucPre" [ngValue]="material.codigo">
+                        {{material.denominacion}}
+                    </option>
+
+
+                </select>
+
+            </div>
+
+            <div class="col form-group">
+                <label>Estado de Conservación<span class="text-danger">*</span></label>
+                <select id="codigoTipoZona" class="form-select form-select-sm"
+                    formControlName="cod_estado_conservacion">
+                    <option disabled>Seleccione una opción</option>
+                    <option *ngFor="let conservacion of lstEstadoConser"
+                        [ngValue]="conservacion.codigo">
+                        {{conservacion.denominacion}}
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+            <div class="form-group form-group col-md-2">
+                <label>Fecha de Construcción<span class="text-danger">*</span></label>
+                <input type="date" class="form-control form-control-sm" formControlName="fec_inicio_vigencia"
+                    placeholder="date" />
+
+            </div>
+
+
+            <div class="form-group col-md-2">
+                <label>Antigüedad(años)</label>
+                <input type="text" class="form-control form-control-sm" readonly formControlName="antiguedad"
+                    value="{{antiguedad}} ">
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col form-group">
+                <label>Clasificación<span class="text-danger">*</span></label>
+                <select id="codigoTipoZona" class="form-select form-select-sm"
+                    formControlName="cod_clasificacion_obra_complementaria">
+                    <option disabled>Seleccione una opción</option>
+                    <option *ngFor="let clasificacion of lstClasificacion"
+                        [ngValue]="clasificacion.codigo">
+                        {{clasificacion.denominacion}}
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+            <div class="col form-group">
+                <label>Estado Construcción<span class="text-danger">*</span></label>
+                <select id="codigoTipoZona" class="form-select form-select-sm"
+                    formControlName="cod_estado_construccion">
+                    <option disabled>Seleccione una opción</option>
+                    <option *ngFor="let estado of lstEstadoConstrucc" [ngValue]="estado.codigo">
+                        {{estado.denominacion}}
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+            <div class="form-group form-group col-md-2">
+                <label>Metrado<span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-sm" placeholder="" date (keypress)="InputNumber($event)"  maxlength="15"
+                    formControlName="metrado" required [ngClass]="{
+                        'is-invalid':!form.get('metrado').valid && form.get('metrado').touched
+                    }" />
+                
+
+            </div>
+
+
+            <div class="form-group col-md-2">
+                <label>Unidad de Medida</label>
+                <select id="codigoTipoZona" class="form-select form-select-sm"
+                    formControlName="cod_unidad_medida" onselect="abrevia()">
+                    <option disabled>Seleccione una opción</option>
+                    <option *ngFor="let unidad of lstUnidadMedida" [ngValue]="unidad.codigo"  >
+                        {{unidad.denominacion}}  
+                    </option>
+
+
+                </select>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="form-group form-group col-md">
+                <label>Largo(m)<span class="text-danger">*</span></label>
+                <input formControlName="largo" type="text" class="form-control form-control-sm" placeholder="" (keypress)="InputNumber($event)"  maxlength="15"
+                    required [ngClass]="{
+                        'is-invalid':!form.get('largo').valid && form.get('largo').touched
+                    }" />
+                    
+                    
+
+            </div>
+
+            <div class="form-group form-group col-md">
+                <label>Ancho(m)<span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-sm"  formControlName="ancho" placeholder="" (keypress)="InputNumber($event)"  maxlength="15"
+                    required [ngClass]="{
+                    'is-invalid':!form.get('ancho').valid && form.get('ancho').touched
+                }" />
+                
+                
+
+            </div>
+
+            <div class="form-group form-group col-md">
+                <label>Alto(m)<span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-sm" formControlName="alto" (keypress)="InputNumber($event)"  maxlength="15" 
+                    placeholder="" required [ngClass]="{
+                    'is-invalid':!form.get('alto').valid && form.get('alto').touched
+                }" />
+                
+                
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="form-group form-group col-md">
+                <label> Valor Unitario x Unidad de Medida<span class="text-danger">*</span></label>
+                <input type="text" (keypress)="InputNumber($event)"  maxlength="15" class="form-control form-control-sm"placeholder="" date
+                    formControlName="valor_unitario" required [ngClass]="{
+                        'is-invalid':!form.get('valor_unitario').valid && form.get('valor_unitario').touched
+                    }" />
+
+            </div>
+
+            <div class="form-group form-group col-md">
+                <label> %Depreciación<span class="text-danger">*</span></label>
+                <input type="text" class="form-control form-control-sm" formControlName="porcent_depreciado" (keypress)="InputNumber($event)"  maxlength="6"
+                    required [ngClass]="{
+                    'is-invalid':!form.get('porcent_depreciado').valid && form.get('porcent_depreciado').touched
+                }" />
+
+            </div>
+
+            <div class="form-group col-md">
+                <label>Valor Depreciación</label>
+                <input type="text" class="form-control form-control-sm" readonly value="{{Depreciacion}}"
+                    formControlName="valor_depreciado">
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label>Valor de la Construcción</label>
+                <input type="text" class="form-control form-control-sm"  value="{{Construccion}}" readonly
+                    formControlName="valor_construccion">
+            </div>
+
+        </div>
+
+
+    </form>
+
+</fieldset>
+<div class="row">
+    <div class="form-group col-md-8"> </div>
+    <div class="form-group col-md-2">
+        <button class="btn btn-primary btn-sm" style="float:right;" (click)="cancel()">Cancelar</button>
+    </div>
+    <div class="form-group col-md-2">
+        &nbsp;
+        <button class="btn btn-success btn-sm" style="float: right;" *ngIf="this.status == 'update'" (click)="update()">Actualizar</button>
+    </div>
+    
+    
+</div>

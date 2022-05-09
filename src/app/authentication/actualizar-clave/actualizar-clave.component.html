@@ -1,0 +1,87 @@
+<main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+  <div class="container register-container">
+    <div class="card register-card">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <img src="assets/images/logotipo.png" alt="register" class="register-card-img" >
+        </div>
+        <div class="col-md-7">
+          <div class="register-body">
+            <div class="text-center">
+              <div class="brand-wrapper" style="margin-right: 160px;">
+                  <label> <b>Actualizar contraseña </b> </label>
+                  <br>
+              </div>
+            </div>
+
+            <form class="login-form mt-6" [formGroup]="updateForm" (ngSubmit)="onSubmit()" >
+              <div class="row">
+                <div class="col-md-10">
+                  <div class="form-group position-relative">
+                    <label> Contraseña actual <span class="text-danger">*</span></label>
+                    <i-feather name="key" class="login-icons"></i-feather>
+                    <input type="password" class="form-control psl-5" formControlName="actualPassword" placeholder="**********"
+                      required>              
+                  </div>
+                </div>
+                <div class="col-md-10">
+                  <div class="form-group position-relative ">
+                    <label>Nueva contraseña <span class="text-danger">*</span></label>
+                    <i-feather name="key" class="login-icons"></i-feather>
+                    <input type="password" 
+                    class="form-control psl-5" [ngClass]="{'is-invalid': updateForm.get('newPassword').errors && updateForm.get('newPassword').touched,
+                    'is-valid': !updateForm.get('newPassword').errors && updateForm.get('newPassword').touched}"
+                    formControlName="newPassword"
+                    placeholder="**********"
+                    required>
+                    <div class="invalid-feedback" *ngIf="updateForm.controls['newPassword'].hasError('minlength')">La contraseña debe tener 8 caracteres como mínimo</div>
+                    <div class="invalid-feedback" *ngIf="updateForm.controls['newPassword'].hasError('maxlength')">La contraseña debe tener 16 caracteres como máximo</div>
+                    <div class="invalid-feedback" *ngIf="updateForm.controls['newPassword'].hasError('hasNumber')">La contraseña debe incluir números</div>
+                    <div class="invalid-feedback" *ngIf="updateForm.controls['newPassword'].hasError('hasCapitalCase')">La contraseña debe incluir mayusculas </div>
+                    <div class="invalid-feedback" *ngIf="updateForm.controls['newPassword'].hasError('invalidName')">La contraseña no debe incluir caracteres especiales</div>  
+                    
+                  </div>
+                </div>
+
+                  <div class="col-md-10">
+                    
+                    <div class="form-group position-relative ">
+                      
+                      <label>Confirmar contraseña <span class="text-danger">*</span></label>
+                      <i-feather name="key" class="login-icons"></i-feather>
+                      
+                      
+                      <input type="password" 
+                      class="form-control psl-5" [ngClass]="{'is-invalid': updateForm.get('confirmPassword').errors && updateForm.get('confirmPassword').touched,
+                      'is-valid': !updateForm.get('confirmPassword').errors && updateForm.get('confirmPassword').touched}" 
+                      formControlName="confirmPassword"
+                      placeholder="**********"
+                      required >
+                      
+                      <div class="invalid-feedback" *ngIf="updateForm.controls['confirmPassword'].hasError('NoPassswordMatch')">Las contraseñas no coinciden</div>
+                    </div>
+                  </div> 
+                  <div *ngIf="error" class="alert alert-danger mb-3 msl-3">{{error}}</div>
+                  
+                  
+
+                </div>
+
+                <div class="row" style="margin-top: 15px;">
+                  <div class="col-md-3" >
+                    <button class="btn btn-danger auth-form-btn" style="width: 7vw; height: 2vw; float:right; margin-right: -3.5vw;"  (click)="cancelar()">Cancelar</button>
+                  </div>
+                  <div class="col-md-3" >
+                    <button class="btn btn-success auth-form-btn" style="width: 7vw;height: 2vw ;float:left; margin-left: 3vw;" [disabled]="updateForm.invalid" >Guardar</button>
+                  </div>
+
+                </div>
+
+            </form>
+                     
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,68 @@
+<fieldset> 
+    <form >
+        <div class="row justify-content-md-center">
+            <div class="col-md-8" >
+            <div class="card-body">
+              <div class="table-responsive"  >
+                  <table class="table table-bordered table-md" >
+                      <tr>
+                        <th class="text-center " style="width:40%">Denominación</th>
+                        <th class="text-center" style="width:10%">Cantidad</th>
+                        <th class="text-center" style="width:40%">SubTotal</th>
+                        
+                      </tr>
+  
+                      <tr *ngFor="let denominacion of lstDenominaciones; let i =index">
+                        <td class="text-center">{{lstDenominaciones[i]}}</td>
+                          <td  style="text-align:center;">
+                            <div>
+                            <input [(ngModel)]="lstCantidades[i]" (change)="calcularTotal(i)" 
+                            name="cantidad" class="form-control form-control-sm" type="number" min="0" max="{{lstMax[i]}}">
+                          </div>
+                          </td>
+  
+                          <td class="text-center">{{calcularSubTotal(lstDenominaciones[i],lstCantidades[i],i)}}</td>
+                          
+                      </tr>
+  <!-- 
+                      <tr>
+                          <td class="text-center">{{denominacion}}</td>
+                          <td  style="text-align:center;">
+                            <div>
+                            <input [(ngModel)]="cantidad" class="form-control form-control-sm " 
+                            type="number">
+                          </div>
+                          </td>
+  
+                          <td class="text-center">{{calcularSubTotal(denominacion,cantidad)}}</td>
+                          
+                      </tr> -->
+                      
+                  </table>
+  
+  
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-md-center">
+          <div class="col-md-8 " >
+          <div ><label  style="float: left; font-size: x-large; margin-left: 15%;" >Total</label></div>
+          <div ><label style="float: right; font-size: x-large; margin-right: 15%;" >{{total}}</label></div>
+        <br><br>
+          <button type="submit" class="btn btn-secondary btn-sm"
+                        style="float: left; margin-left: 15%; width: 30%; min-width: 25%;"
+                        (click)="dialogRef.close()">  Cancelar  </button>  
+          <button type="submit" class="btn btn-success btn-sm"
+                        style="float: right; margin-right: 15%; width: 30%; min-width: 25%;"
+                        [disabled]="!(total<=max && total>=min) || !(valido)"
+                        (click)="enviar()"
+                        >Aceptar</button>  
+          
+        </div>
+        <span *ngIf="total>max" style="color: red; text-align: center;">El monto ingresado supera los límites</span>
+          <span *ngIf="total<min" style="color: red; text-align: center;">El monto ingresado es menor al mínimo permitido</span>
+      </div>
+      
+    </form>
+</fieldset>

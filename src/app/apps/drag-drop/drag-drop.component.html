@@ -1,0 +1,285 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Drag & Drop</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Apps</li>
+    <li class="breadcrumb-item">Drag & Drop</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Basic Drag & Drop</h4>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info">
+              Move stuff between these two containers. Note how the stuff gets inserted near the mouse
+              pointer? Great stuff.
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="left">
+                    <div class="container" dragula="VAMPIRES">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect"> User
+                          card #1</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #2</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #3</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #4</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="right">
+                    <div class="container" dragula="VAMPIRES">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #7</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #8</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Drag & Drop Events</h4>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info" style="width: 100%">
+              There are plenty of events along the lifetime of a drag event. <a
+                href="https://github.com/bevacqua/dragula#drakeon-events">all
+                of them</a> in the docs!
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="left">
+                    <div class="container" dragula="DRAGULA_EVENTS">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect"> User
+                          card #1</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #2</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #3</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #4</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="right">
+                    <div class="container" dragula="DRAGULA_EVENTS">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #5</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #6</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Spill</h4>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info">
+              Need to be able to quickly delete stuff when it spills out of the chosen containers?
+              Note how you can easily sort the items in any containers by just dragging and dropping.
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="right">
+                    <div class='container' dragula="SPILL">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect"> User
+                          card #1</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #2</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #3</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #4</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Revert</h4>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info">
+              By default, dropping an element outside of any known containers will keep the element in
+              the last place it went over. You can make elements go back to origin if they're dropped
+              outside of known containers, too.
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="left">
+                    <div class="container" dragula="REVERT">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect"> User
+                          card #1</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #2</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #3</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #4</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="right">
+                    <div class="container" dragula="REVERT">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #5</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #6</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Copy element</h4>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info">
+              Copying Elements from left side to right side made it easy for you.
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="left">
+                    <div class='container' dragula="COPYABLE" id="left">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect"> User
+                          card #1</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #2</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #3</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #4</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <div class="board">
+                  <div class="cards" id="right">
+                    <div class='container' dragula="COPYABLE" id="right">
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #5</span></div>
+                      <div class="drop-card"><span>
+                          <img class="img-round-sm" src="assets/images/users/user-1.png" alt="">
+                        </span><span class="cardtitle noselect">User
+                          card #6</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

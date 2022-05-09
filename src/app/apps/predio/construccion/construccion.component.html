@@ -1,0 +1,303 @@
+<section class="main-content">
+    <div style="margin-top: 20px"></div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card" #content>
+
+                    <div class="card-header">
+                        <h4>Registro Predio</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="stepper-wrapper">
+                            <div class="stepper-item completed">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item active">
+                                <div class="step-counter active">2</div>
+                                <div class="step-name">V. CONSTRUCCIÓN</div>
+                            </div>
+                            <div class="stepper-item ">
+                                <div class="step-counter">3</div>
+                                <div class="step-name">COMPLEMENTOS</div>
+                            </div>
+                            <div class="stepper-item ">
+                                <div class="step-counter">4</div>
+                                <div class="step-name">ÁREA COMÚN</div>
+                            </div>
+                            <div class="stepper-item" *ngIf="!isFromBienComun">
+                                <div class="step-counter">5</div>
+                                <div class="step-name">PROPIETARIO</div>
+                            </div>
+                            <div class="stepper-item" *ngIf="isFromBienComun">
+                                <div class="step-counter">5</div>
+                                <div class="step-name">COPROPIETARIO</div>
+                            </div>
+                        </div>
+                        <form ngForm [formGroup]="form">
+                            <h6>Determinación del Valor de la Construcción</h6>
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label>Bloque</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="Bloque" formControlName="nombre_bloque" required [ngClass]="{
+                                            'is-invalid':!form.get('nombre_bloque').valid && form.get('nombre_bloque').touched,
+                                            'is-valid':form.get('nombre_bloque').valid && form.get('nombre_bloque').touched}" />
+
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Piso</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="Piso"
+                                    formControlName="numero_piso" (keypress)="validarNumero($event)" required [ngClass]="{
+                                            'is-invalid':!form.get('numero_piso').valid && form.get('numero_piso').touched,
+                                            'is-valid':form.get('numero_piso').valid && form.get('numero_piso').touched}">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Área Construida(m2)</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0.00" formControlName="area_construida" required [ngClass]="{'is-invalid':!form.get('area_construida').valid && form.get('area_construida').touched,
+                                        'is-valid':form.get('area_construida').valid && form.get('area_construida').touched}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Fecha de Construcción</label>
+                                    <input type="date" class="form-control form-control-sm" formControlName="fec_inicio_vigencia" required [ngClass]="{
+                                        'is-invalid':!form.get('fec_inicio_vigencia').valid && form.get('fec_inicio_vigencia').touched,
+                                        'is-valid':form.get('fec_inicio_vigencia').valid && form.get('fec_inicio_vigencia').touched}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Antiguedad(años)</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0" value="{{antiguedad}}" disabled>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Material Predominante</label>
+                                    <select class="form-select form-select-sm" formControlName="cod_estructura_predominante" required [ngClass]="{'is-invalid':!form.get('cod_estructura_predominante').valid && form.get('cod_estructura_predominante').touched,
+                                        'is-valid':form.get('cod_estructura_predominante').valid && form.get('cod_estructura_predominante').touched}">
+                                        <option value="" selected disabled>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasEstPred" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Estado Conservación</label>
+                                    <select class="form-select form-select-sm" formControlName="cod_estado_conservacion" required [ngClass]="{'is-invalid':!form.get('cod_estado_conservacion').valid && form.get('cod_estado_conservacion').touched,
+                                        'is-valid':form.get('cod_estado_conservacion').valid && form.get('cod_estado_conservacion').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasCons" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Estado Construcción</label>
+                                    <select class="form-select form-select-sm" formControlName="cod_estado_construccion" required [ngClass]="{'is-invalid':!form.get('cod_estado_construccion').valid && form.get('cod_estado_construccion').touched,
+                                        'is-valid':form.get('cod_estado_construccion').valid && form.get('cod_estado_construccion').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasEstConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <h6>Categorías</h6>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Muros y Columnas</label>
+                                    <select class="form-select form-select-sm" formControlName="cat_contruccion_muro_columna" required [ngClass]="{'is-invalid':!form.get('cat_contruccion_muro_columna').valid && form.get('cat_contruccion_muro_columna').touched,
+                                        'is-valid':form.get('cat_contruccion_muro_columna').valid && form.get('cat_contruccion_muro_columna').touched}">
+                                        <option value="" disabled selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Puertas y Ventanas</label>
+                                    <select class="form-select form-select-sm" formControlName="cat_construccion_puerta_ventana" required [ngClass]="{'is-invalid':!form.get('cat_construccion_puerta_ventana').valid && form.get('cat_construccion_puerta_ventana').touched,
+                                        'is-valid':form.get('cat_construccion_puerta_ventana').valid && form.get('cat_construccion_puerta_ventana').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Pisos</label>
+                                    <select class="form-select form-select-sm" formControlName="cat_construccion_piso" required [ngClass]="{'is-invalid':!form.get('cat_construccion_piso').valid && form.get('cat_construccion_piso').touched,
+                                    'is-valid':form.get('cat_construccion_piso').valid && form.get('cat_construccion_piso').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Techos</label>
+                                    <select class="form-select form-select-sm" formControlName="cat_construccion_techo" required [ngClass]="{'is-invalid':!form.get('cat_construccion_techo').valid && form.get('cat_construccion_techo').touched,
+                                    'is-valid':form.get('cat_construccion_techo').valid && form.get('cat_construccion_techo').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Revestimiento</label>
+                                    <select class="form-select form-select-sm" formControlName="cat_construccion_revestimiento" required [ngClass]="{'is-invalid':!form.get('cat_construccion_revestimiento').valid && form.get('cat_construccion_revestimiento').touched,
+                                        'is-valid':form.get('cat_construccion_revestimiento').valid && form.get('cat_construccion_revestimiento').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Baños</label>
+                                    <select class="form-select form-select-sm" formControlName="cat_construccion_banio" required [ngClass]="{'is-invalid':!form.get('cat_construccion_banio').valid && form.get('cat_construccion_banio').touched,
+                                    'is-valid':form.get('cat_construccion_banio').valid && form.get('cat_construccion_banio').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Instalaciones Eléctricas</label>
+                                    <select class="form-select form-select-sm" formControlName="cat_construccion_electrico_sanitario" required [ngClass]="{'is-invalid':!form.get('cat_construccion_electrico_sanitario').valid && form.get('cat_construccion_electrico_sanitario').touched,
+                                        'is-valid':form.get('cat_construccion_electrico_sanitario').valid && form.get('cat_construccion_electrico_sanitario').touched}">
+                                        <option value="" selected>Seleccione</option>
+                                        <option *ngFor="let tabla of tablasConst" value="{{tabla.codigo}}">
+                                            {{tabla.denominacion}} </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--div class="row">
+                                <div class="form-group col-md-2">
+                                    <label>% Incremento</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0.00" formControlName="incremento" required [ngClass]="{'is-invalid':!form.get('incremento').valid && form.get('incremento').touched,
+                                        'is-valid':form.get('incremento').valid && form.get('incremento').touched}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Valor Incremento</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0.00" formControlName="valor_incremnto" required [ngClass]="{'is-invalid':!form.get('valor_incremnto').valid && form.get('valor_incremnto').touched,
+                                        'is-valid':form.get('valor_incremnto').valid && form.get('valor_incremnto').touched}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>% Depreciación</label>
+                                    <input type="number" class="form-control form-control-sm" placeholder="0.00" formControlName="porcent_depreciado" required [ngClass]="{'is-invalid':!form.get('porcent_depreciado').valid && form.get('porcent_depreciado').touched,
+                                        'is-valid':form.get('porcent_depreciado').valid && form.get('porcent_depreciado').touched}">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Valor de la Depreciación</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="0.00" value="{{depreciacion}}" disabled>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Valor de la Construcción</label>
+                                    <input type="text" class="form-control form-control-sm" placeholder="0.00" value="{{construccion}}" disabled>
+                                </div>
+                            </div-->
+
+                        </form>
+                        <div>
+                            <button class="btn btn-success btn-sm" *ngIf="!loadAgregar" [disabled]="!form.valid" (click)="save()" style="float: right;">Agregar</button>
+                            <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="loadAgregar">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                        </div>
+
+
+                        <br><br><br>
+                        <div class="table-responsive">
+                            <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="loadListPredioConstruccion">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            <table class="table table-bordered table-md" *ngIf="!loadListPredioConstruccion">
+                                <tr>
+                                    <th style="text-align: center;">Bloque</th>
+                                    <th style="text-align: center;">Piso</th>
+                                    <th style="text-align: center;">Categoría</th>
+                                    <th style="text-align: center;">Valor Unitario x m2</th>
+                                    <th style="text-align: center;">Valor Depreciado x m2</th>
+                                    <th style="text-align: center;">Incremento x m2</th>
+                                    <th style="text-align: center;">Área Const.(m2)</th>
+                                    <th style="text-align: center;">Valor Construcción</th>
+                                    <th style="text-align: center;">Acción</th>
+                                </tr>
+                                <tr *ngFor="let item of results">
+                                    <td style="text-align: center;">{{item.nombre_bloque}} </td>
+                                    <td style="text-align: center;" *ngIf="item.numero_piso < 10">0{{item.numero_piso}}
+                                    </td>
+                                    <td style="text-align: center;" *ngIf="item.numero_piso >= 10">{{item.numero_piso}}
+                                    </td>
+                                    <td style="text-align: center;" *ngIf="item.predioconstruccioncategoria_set">
+                                        {{comparacion(item.predioconstruccioncategoria_set)}} 
+                                    </td>
+                                    <td style="text-align: center;" *ngIf="!item.predioconstruccioncategoria_set">
+                                        NAN 
+                                    </td>
+                                    <td style="text-align: right;" *ngIf="item.predioconstruccioncategoria_set">
+                                        {{ valorUnitarioByM2(item.predioconstruccioncategoria_set) | number:'.2'}} 
+                                    </td>
+                                    <td style="text-align: center;" *ngIf="!item.predioconstruccioncategoria_set">
+                                        NAN 
+                                    </td>
+                                    <td style="text-align: right;">{{item.valor_depreciado| number:'.2'}}</td>
+                                    <td style="text-align: right;">
+                                        {{item.valor_incremento| number:'.2'}}
+                                    </td>
+                                    <td style="text-align: right;">{{item.area_construida| number:'.2'}}</td>
+                                    <td style="text-align: right;">{{item.valor_construccion| number:'.2'}}</td>
+                                    <td style="text-align: center;">
+                                        <div class="buttons">
+                                            <button class="btn btn-icon btn-outline-primary btn-sm" (click)="clickA(item, 'view')"><i class="fas fa-eye"></i></button>
+                                            <button class="btn btn-icon btn-outline-success btn-sm" (click)="clickA(item, 'update')"><i class="far fa-edit"></i></button>
+                                            <button class="btn btn-icon btn-outline-danger btn-sm" (click)="delete(item.id)"><i class="fas fa-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <!-- <tr> <a [routerLink]="['/pages/registro/persona', item.id]">
+                                            <td>a</td>
+                                            <td>01</td>
+                                            <td>ABC</td>
+                                            <td> 100 </td>
+                                            <td>100.00</td>
+                                            <td>45</td>
+                                            <td>244.55</td>
+                                            <td><div class="buttons">
+                                                <button class="btn btn-icon btn-primary" routerLink="/predio/const/1"><i class="far fa-edit"></i></button>
+                                                <button class="btn btn-icon btn-success"><i class="fas fa-eye"></i></button>
+                                                <button class="btn btn-icon btn-danger"><i class="fas fa-trash"></i></button>
+                                            </div></td>
+                                        </tr> -->
+
+                            </table>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="form-group col-md-8" style="text-align: right;">
+
+                                    <label>VALOR TOTAL DE LA CONSTRUCCIÓN: </label>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <input type="text" class="form-control form-control-sm" placeholder="" value="{{total | number:'.2'}}" disabled>
+                                </div>
+                                <div class="form-group col-md-2">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-10">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <button class="btn btn-primary btn-sm" style="width: 37%;" (click)="atras()">Atras</button> &nbsp;
+                                    <button class="btn btn-success btn-sm" (click)="updatePredio(2)">Siguiente</button>
+                                </div>
+                                <!-- [routerLink]="['/predio/urbano']"
+                                        [routerLink]="['/predio/complements']" -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

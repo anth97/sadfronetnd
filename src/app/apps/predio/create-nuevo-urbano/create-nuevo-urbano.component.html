@@ -1,0 +1,408 @@
+<section class="main-content">
+    <div style="margin-top: 20px"></div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="h3" *ngIf="!isBienComun">
+                            Registro Predio &nbsp;                     
+                        </h3>
+                        <h3 class="h3" *ngIf="isBienComun">
+                            Registro Bien Común &nbsp;                     
+                        </h3>
+                        <span style="margin-left: 8px; font-size: 16px; margin-bottom: 5px;" *ngIf="depart && prov && distri">
+                            {{depart.denominacion |slice:0:1}}{{depart.denominacion.toLowerCase() |slice:1}}&nbsp;/&nbsp;
+                            {{prov.denominacion | slice:0:1}}{{prov.denominacion.toLowerCase() | slice:1}}&nbsp;/&nbsp;
+                            {{distri.denominacion |slice:0:1}}{{distri.denominacion.toLowerCase() |slice:1}}
+                        </span> 
+                        
+                    </div>
+                    <div class="card-body">
+                        <div class="stepper-wrapper" *ngIf="!isBienComun">
+                            <div class="stepper-item active">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">2</div>
+                                <div class="step-name">V. CONSTRUCCIÓN</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">3</div>
+                                <div class="step-name">COMPLEMENTOS</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">4</div>
+                                <div class="step-name">ÁREA COMÚN</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter" >5</div>
+                                <div class="step-name">PROPIETARIO</div>
+                            </div>
+                        </div>
+                        <div class="stepper-wrapper" *ngIf="isBienComun">
+                            <div class="stepper-item active">
+                                <div class="step-counter">1</div>
+                                <div class="step-name">DATOS DEL PREDIO</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">2</div>
+                                <div class="step-name">V. CONSTRUCCIÓN</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">3</div>
+                                <div class="step-name">COMPLEMENTOS</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">4</div>
+                                <div class="step-name">ÁREA COMÚN</div>
+                            </div>
+                            <div class="stepper-item">
+                                <div class="step-counter">5</div>
+                                <div class="step-name">COPROPIETARIO</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h6 style="margin-left: 25px;">Datos del Predio</h6>
+                            <span *ngIf="errorGetPredio" style="color: red;">{{errorGetPredio}}</span>
+                        </div>
+                        <form class="register-form m-4" [formGroup]="register">
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label for="codigoCatastral">Código Catastral</label>
+                                    <input id="codigoCatastral" type="text" class="form-control form-control-sm"
+                                        formControlName="codigo_catastral"
+                                        maxlength="20" [ngClass]="{
+                                            'is-invalid':!register.get('codigo_catastral').valid  && ccSiguiente               
+                                        }">                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="region">Región Perú</label>
+                                    <div class="col-sm-15">
+                                        <select id="region" class="form-select form-select-sm" formControlName="region" [ngClass]="{
+                                            'is-invalid':!register.get('region').valid  && ccSiguiente               
+                                        }">
+                                            <option disabled value="AAAAAA">seleccione</option>
+                                            <option *ngFor="let reg of lstregion" [ngValue]="reg.codigo">
+                                                {{reg.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>                                 
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="codigoTipoZona">Tipo Zona</label>
+                                    <div class="col-sm-15">
+                                        <select id="codigoTipoZona" class="form-select form-select-sm" formControlName="tipo_zona" [ngClass]="{
+                                            'is-invalid':!register.get('tipo_zona').valid  && ccSiguiente               
+                                        }">
+                                            <option disabled value="AAAAAA">seleccione</option>
+                                            <option *ngFor="let tipozona of lsttipozona" [ngValue]="tipozona.codigo">
+                                                {{tipozona.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="habilitacionUrbana">Habilitación Urbana</label>
+                                    <select id="habilitacionUrbana" class="form-select form-select-sm" formControlName="habilitacion_urbana"
+                                    [ngClass]="{
+                                        'is-invalid':!register.get('habilitacion_urbana').valid  && ccSiguiente               
+                                    }">
+                                        <option disabled value="AAAAAA">seleccione</option>
+                                        <option *ngFor="let habilitacionurbana of lsthabilitacionurbana"
+                                            [ngValue]="habilitacionurbana.id">{{habilitacionurbana.denominacion}} 
+                                        </option>
+                                    </select>
+                                </div>                               
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="viaubicacion">Zona Ubicación Predio</label>
+                                    <select id="viaubicacion" class="form-select form-select-sm" formControlName="via_ubicacion"
+                                    [ngClass]="{
+                                        'is-invalid':!register.get('via_ubicacion').valid  && ccSiguiente               
+                                    }">
+                                        <option disabled value="AAAAAA">seleccione</option>
+                                        <option *ngFor="let ubicacion of lstubicacion"
+                                            [ngValue]="ubicacion.id">{{ubicacion.denominacion}} 
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="tipoVia">Tipo Vía</label>
+                                    <select id="tipoVia" class="form-select form-select-sm" formControlName="tipo_via" [ngClass]="{
+                                        'is-invalid':!register.get('tipo_via').valid  && ccSiguiente               
+                                    }">
+                                        <option disabled value="AAAAAA">seleccione</option>
+                                        <option *ngFor="let tipovia of lsttipovia" [ngValue]="tipovia.codigo">
+                                            {{tipovia.denominacion}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="direccion">Vía / Dirección</label>
+                                    <input id="direccion" type="text" class="form-control form-control-sm" 
+                                        formControlName="via_direccion"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('via_direccion').valid  && ccSiguiente               
+                                        }">
+                                    
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-2">
+                                    <label for="numeroEdificio">Número</label>
+                                    <input id="numeroEdificio" type="text" class="form-control form-control-sm" formControlName="numero" min="0"
+                                    step="1"
+                                    (keypress)="InputNumber($event)"
+                                    maxlength="9"
+                                    [ngClass]="{
+                                        'is-invalid':!register.get('numero').valid  && ccSiguiente               
+                                    }">
+                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="departamento">Departamento</label>
+                                    <input id="departamento" type="text" class="form-control form-control-sm" 
+                                        formControlName="departamento" maxlength="5"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('departamento').valid  && ccSiguiente               
+                                        }">
+                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="interior">Interior</label>
+                                    <input id="interior" type="text" class="form-control form-control-sm" formControlName="interior" maxlength="5"
+                                    [ngClass]="{
+                                        'is-invalid':!register.get('interior').valid  && ccSiguiente               
+                                    }">
+                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="manzana">Manzana</label>
+                                    <input id="manzana" type="text" class="form-control form-control-sm" formControlName="manzana" maxlength="5"
+                                    [ngClass]="{
+                                        'is-invalid':!register.get('manzana').valid  && ccSiguiente               
+                                    }">
+                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="lote">Lote</label>
+                                    <input id="lote" type="text" class="form-control form-control-sm"
+                                        formControlName="interior_2" maxlength="5"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('interior_2').valid  && ccSiguiente               
+                                        }">
+                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="kilometro">Kilómetro</label>
+                                    <input id="kilometro" type="text" class="form-control form-control-sm" 
+                                        formControlName="kilometro" min="0" max="999999.99" 
+                                        (keypress)="InputNumber($event)"
+                                        maxlength="9"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('kilometro').valid && ccSiguiente             
+                                        }">                                    
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Estado</label>
+                                    <div class="col-sm-15">
+                                        <select class="form-select form-select-sm"  formControlName="terminado" [ngClass]="{
+                                            'is-invalid':!register.get('terminado').valid  && ccSiguiente               
+                                        }">
+                                            <option disabled value="AAAAAA">seleccione</option>
+                                            <option *ngFor="let terminado of lstterminado" [ngValue]="terminado.codigo">
+                                                {{terminado.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label >Sector</label>
+                                    <div class="col-sm-15">
+                                        <select class="form-select form-select-sm" name="sector" formControlName="sector"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('sector').valid && ccSiguiente    
+                                        }">
+                                            <option disabled value="AAAAAA">seleccione</option> 
+                                            <option *ngFor="let sect of lstSector" [ngValue]="sect.codigo">
+                                                {{sect.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>Situación Formal</label>
+                                    <div class="col-sm-15">
+                                        <select class="form-select form-select-sm" formControlName="situacion"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('situacion').valid && ccSiguiente      
+                                        }">
+                                            <option disabled value="AAAAAA">seleccione</option>
+                                            <option *ngFor="let situa of lstsituacion"
+                                                [ngValue]="situa.codigo">{{situa.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Uso Predio</label>
+                                    <div class="col-sm-15">
+                                        <select class="form-select form-select-sm" formControlName="uso_predio"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('uso_predio').valid && ccSiguiente      
+                                        }">
+                                            <option disabled value="AAAAAA">seleccione</option>
+                                            <option *ngFor="let uso of lstusopredio"
+                                                [ngValue]="uso.codigo">{{uso.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label>Tipo de Propiedad</label>
+                                    <div class="col-sm-15">
+                                        <select class="form-select form-select-sm" formControlName="tipo_propiedad"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('tipo_propiedad').valid && ccSiguiente       
+                                        }">
+                                            <option disabled value="AAAAAA">seleccione</option>
+                                            <option *ngFor="let tipopropiedad of lsttipopropiedad"
+                                                [ngValue]="tipopropiedad.codigo">{{tipopropiedad.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <!--div class="form-group col-md-4">
+                                    <label for="usoPredio">Uso Predio</label>
+                                    <div class="col-sm-15">
+                                        <select id="usoPredio" class="form-select form-select-sm" formControlName="uso_predio"
+                                            >
+                                            <option *ngFor="let usopredio of lstusopredio"
+                                                [ngValue]="usopredio.codigo">{{usopredio.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div-->
+                                <div class="form-group col-md-4">
+                                    <label for="frente">Frente (m)</label>
+                                    <input id="frente" type="text" class="form-control form-control-sm"
+                                        (keypress)="InputNumber($event)"
+                                        maxlength="8"                                        
+                                        formControlName="frente" min="0" max="99999.99"
+
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('frente').valid && ccSiguiente 
+                                        }">
+                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="terreno">Área del Terreno (m2)</label>
+                                    <input id="terreno" type="text" class="form-control form-control-sm"
+                                        (keypress)="InputNumber($event)"
+                                        maxlength="13"
+                                        formControlName="a_terreno" min="0" max="9999999999.99"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('a_terreno').valid && ccSiguiente          
+                                        }">                                    
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="construida">Área Construída (m2)</label>
+                                    <input id="construida" type="text" class="form-control form-control-sm" 
+                                        formControlName="a_construida" 
+                                        (keypress)="InputNumber($event)"
+                                        maxlength="13"
+                                        [ngClass]="{
+                                            'is-invalid':!register.get('a_construida').valid && ccSiguiente               
+                                        }">                                    
+                                </div>
+                                <!--div class="form-group col-md-4">
+                                    <label>Condicion Propiedad</label>
+                                    <div class="col-sm-15">
+                                        <select class="form-select form-select-sm" formControlName="condicion_propiedad"
+                                            (change)="onChangecondicionpropiedad()">
+                                            <option [ngValue]="0000" selected>--seleccione--</option>
+                                            <option *ngFor="let condicionpropiedad of lstcondicionpropiedad"
+                                                [ngValue]="condicionpropiedad.codigo">
+                                                {{condicionpropiedad.denominacion}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div-->
+                                <!--div class="form-group col-md-4">
+                                    <label for="condicion">% Condición</label>
+                                    <input id="condicion" type="text" class="form-control form-control-sm" placeholder="100.00" name="condicion" formControlName="condicion">
+                                </div-->
+                            </div>
+                            <div class="form-group">
+                                <label for="referencia">Referencia</label>
+                                <input id="referencia" type="text" class="form-control form-control-sm"
+                                    name="referencia" formControlName="referencia" placeholder="Ingrese la referencia del predio"
+                                    [ngClass]="{
+                                        'is-invalid':!register.get('referencia').valid && ccSiguiente                
+                                    }">
+                                
+                            </div>
+
+                            <!--h4>Inafectación/Exoneración/Beneficio Tributario</h4-->
+                            <!--div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="regimen">Regimen</label>
+                                    <select id="regimen" class="form-select form-select-sm" formControlName="regimen">
+                                        <option [ngValue]="0000" selected>--seleccione--</option>
+                                        <option *ngFor="let regimen of lstregimen" [ngValue]="regimen.codigo">
+                                            {{regimen.denominacion}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="exoneracion">% Exoneración</label>
+                                    <input id="exoneracion" type="text" class="form-control form-control-sm" placeholder="Los Artesanos"
+                                        formControlName="exoneracion">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="fechaInicio">Fecha Inicio</label>
+                                    <input id="fechaInicio" type="date" class="form-control form-control-sm" placeholder="20-01-2000"
+                                        formControlName="fecha_inicio">
+                                </div>
+                            </div-->
+                            <div class="row">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <!--button class="btn btn-primary">Cancelar</button--> &nbsp;
+                                    <button class="btn btn-secondary btn-sm" (click)="clicCancelar()"
+                                        >Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-success btn-sm" (click)="ClickSiguiente()"
+                                         *ngIf="!load && !isBienComun">Siguiente
+                                    </button>
+                                    <button type="submit" class="btn btn-success btn-sm" (click)="createComun()"
+                                         *ngIf="!load && isBienComun">Siguiente
+                                    </button>
+                                    <div class="spinner-border text-primary p-2 bd-highlight" role="status" *ngIf="load">
+                                        <span class="sr-only">Loading...</span>
+                                      </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!--div class="row">
+                        <div class="form-group col-md-9">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <button class="btn btn-primary">Cancelar</button> &nbsp;
+                            <button type="submit" class="next btn btn-success" (click)="ClickSiguiente()">Siguiente</button>
+                        </div>
+                    </div-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

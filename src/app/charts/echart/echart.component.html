@@ -1,0 +1,103 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Echart</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Charts</li>
+    <li class="breadcrumb-item">Echart</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Bar chart with line</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="line_bar_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Line Chart</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="line_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Bar chart</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="bar_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Graph Line Chart</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="graph_line_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Pie Chart</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="pie_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Aria Line Chart</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="area_line_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Sonar Chart</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="sonar_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 col-lg-6">
+        <div class="card">
+          <div class="card-header">
+            <h4>Donut Chart</h4>
+          </div>
+          <div class="card-body">
+            <div echarts [options]="donut_chart" class="echart-height"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

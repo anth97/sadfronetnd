@@ -1,0 +1,95 @@
+<section class="main-content">
+  <ul class="breadcrumb breadcrumb-style ">
+    <li class="breadcrumb-item">
+      <h5 class="page-title m-b-0">Edit Table</h5>
+    </li>
+    <li class="breadcrumb-item bcrumb-1">
+      <a routerLink="/dashboard/main">
+        <i class="fas fa-home font-17"></i></a>
+    </li>
+    <li class="breadcrumb-item">Data Table</li>
+    <li class="breadcrumb-item">Inline Edit Table</li>
+  </ul>
+  <div class="section-body">
+    <div class="row">
+      <div class="col-12 col-md-12 col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Inline Edit Table</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <p>Double click on data to edit record field.</p>
+                <ngx-datatable #table class="material" [rows]="rows" [loadingIndicator]="loadingIndicator"
+                  columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto" [limit]="10"
+                  [scrollbarH]="scrollBarHorizontal" [reorderable]="reorderable">
+                  <ngx-datatable-column name="Name">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                      <img src="{{ row.img }}" class="data-table-img" />
+                      <span title="Double click to edit" (dblclick)="editing[rowIndex + '-name'] = true"
+                        *ngIf="!editing[rowIndex + '-name']">
+                        {{ value }}
+                      </span>
+                      <input autofocus (blur)="updateValue($event, 'name', rowIndex)"
+                        *ngIf="editing[rowIndex + '-name']" type="text" [value]="value" />
+                      <div class="font-12 text-muted">{{row.designation}}</div>
+                    </ng-template>
+                  </ngx-datatable-column>
+
+                  <ngx-datatable-column name="Gender">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                      <span title="Double click to edit" (dblclick)="editing[rowIndex + '-gender'] = true"
+                        *ngIf="!editing[rowIndex + '-gender']">
+                        {{ value }}
+                      </span>
+                      <select *ngIf="editing[rowIndex + '-gender']" (blur)="editing[rowIndex + '-gender'] = false"
+                        (change)="updateValue($event, 'gender', rowIndex)" [value]="value">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Status">
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                      <span title="Double click to edit" (dblclick)="editing[rowIndex + '-status'] = true"
+                        *ngIf="!editing[rowIndex + '-status']">
+                        <div *ngIf="value=='Active'" class="badge-outline col-green">{{value}}
+                        </div>
+                        <div *ngIf="value=='Completed'" class="badge-outline col-red">{{value}}
+                        </div>
+                        <div *ngIf="value=='Pending'" class="badge-outline col-indigo">{{value}}
+                        </div>
+                      </span>
+                      <select *ngIf="editing[rowIndex + '-status']" (blur)="editing[rowIndex + '-status'] = false"
+                        (change)="updateValue($event, 'status', rowIndex)" [value]="value">
+                        <option value="Active">Active</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Pending">Pending</option>
+                      </select>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Phone">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      {{row.phone}}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column name="Actions" sortable="false">
+                    <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <a class="msr-2 h-auto tblEditBtn">
+                        <i class="fas fa-pen"></i>
+                      </a>
+                      <a class="h-auto tblDelBtn">
+                        <i class="far fa-trash-alt"></i>
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </ngx-datatable>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

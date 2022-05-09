@@ -1,0 +1,409 @@
+<p>informacion works!</p>
+<section class="main-content">
+    <div style="margin-top: 20px"></div>
+    <div class="section-body">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <div class="card">
+                    <div class="card-body" *ngIf="data">
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <h4 class="h3" style="margin-left: 25px;">Información</h4>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <select class="form-select form-select-sm" name="prioridadFiscalizacion" (change)="onChangePrioridad()">                                            
+                                    <option value="{{data.predio.priorizacion}}" *ngFor="let prioridad of tablaPrioridad"   [ngValue]="prioridad.codigo">
+                                                {{prioridad.denominacion}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-1">
+                                <label class="custom-switch">
+                                    <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
+                                    <span class="custom-switch-indicator"></span>                                
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+
+                                <li [ngbNavItem]="1">
+                                    <a ngbNavLink>Predio</a>
+                                    <ng-template ngbNavContent>
+
+
+                                        <div class="row" *ngIf="data.predio">
+
+                                            <!-- <div *ngIf="data.predio.tipo_zona" class="form-group col-md-4"> -->
+                                            <div class="form-group col-md-4">
+                                                <label for="codigoTipoZona">Tipo Zona</label>
+                                                <input readonly id="codigoTipoZona" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.cod_tipo_zona}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <!-- <div *ngIf="data.predio.habilitacion_urbana" class="form-group col-md-4"> -->
+                                                <label for="habilitacionUrbana">Habilitación Urbana</label>
+                                                <input readonly id="habilitacionUrbana" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.habilitacion_urbana}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="zonaubicacionpredio">Zona Ubicación Predio</label>
+                                                <input readonly id="zonaubicacionpredio" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.via_ubicacion}}">
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="data.predio">
+                                            <div class="form-group col-md-4">
+                                                <label for="codigoCatastral">Código Catastral</label>
+                                                <input readonly id="codigoCatastral" type="text" class="form-control form-control-sm" value="{{data.predio.cod_catastral}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="TipoVia">Tipo Vía</label>
+                                                <div class="col-sm-15">
+                                                    <input readonly id="TipoVia" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.cod_tipo_via}}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="direccion">Vía / Dirección</label>
+                                                <input readonly id="direccion" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.direccion}}">
+
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="data.predio">
+                                            <div class="form-group col-md-2">
+                                                <label for="numeroEdificio">Número</label>
+                                                <input readonly id="numeroEdificio" type="number" class="form-control form-control-sm" value="{{data.predio.prediourbano.numero}}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="departamento">Departamento</label>
+                                                <input readonly id="departamento" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.kilometro}}">
+
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="interior">Interior</label>
+                                                <input readonly id="interior" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.interior}}">
+
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="manzana">Manzana</label>
+                                                <input readonly id="manzana" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.manzana}}">
+
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="lote">Lote</label>
+                                                <input readonly id="lote" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.lote}}">
+
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="kilometro">Kilómetro</label>
+                                                <input readonly id="kilometro" type="number" class="form-control form-control-sm" value="{{data.predio.prediourbano.kilometro}}">
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="data.predio">
+                                            <div class="form-group col-md-4">
+                                                <label for="estado">Estado</label>
+                                                <input readonly id="estado" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.cod_estado_contruccion}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="sector">Sector</label>
+                                                <input readonly id="sector" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.cod_sector}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="tipopredio">Tipo de Propiedad</label>
+                                                <input readonly id="tipopredio" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.cod_tipo_predio}}">
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="data.predio">
+                                            <div class="form-group col-md-4">
+                                                <label for="usoPredio">Uso Predio</label>
+                                                <input readonly id="sector" type="text" class="form-control form-control-sm" value="{{data.predio.prediourbano.cod_uso_predominante}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="frente">Frente (m)</label>
+                                                <input readonly id="frente" type="number" class="form-control form-control-sm" value="{{data.predio.prediourbano.dist_lado_calle_predio}}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="terreno">Área del Terreno (m2)</label>
+                                                <input readonly id="terreno" type="number" class="form-control form-control-sm" value="{{data.predio.area_terreno}}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="construida">Área Construída (m2)</label>
+                                                <input readonly id="construida" type="number" class="form-control form-control-sm" value="{{data.predio.area_contruida}}">
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="data.predio">
+                                            <div class="form-group col-md-2">
+                                                <label>Condicion Propiedad</label>
+                                                <input readonly id="condicion" type="text" class="form-control form-control-sm" value="{{data.predio.cod_situacion_formal}}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="condicion">% Propiedad</label>
+                                                <input readonly id="condicion" type="text" class="form-control form-control-sm" value="{{data.porc_propiedad}}">
+                                            </div>
+                                            <div class="form-group col-md-8">
+                                                <label for="referencia">Referencia</label>
+                                                <input readonly id="referencia" type="text" class="form-control form-control-sm" value="{{data.predio.ref_direccion}}">
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </li>
+
+                                <li [ngbNavItem]="2">
+                                    <a ngbNavLink>Predio+</a>
+                                    <ng-template ngbNavContent>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <h6>Valor de la Construccion</h6>
+                                            </div>
+
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-md">
+                                                <tr>
+                                                    <th style="text-align: center;">Bloque</th>
+                                                    <th style="text-align: center;">Piso</th>
+                                                    <th style="text-align: center;">Categoría</th>
+                                                    <th style="text-align: center;">Valor Unitario x m2</th>
+                                                    <th style="text-align: center;">Valor Depreciado</th>
+                                                    <th style="text-align: center;">Área Const.(m2)</th>
+                                                    <th style="text-align: center;">Valor Construcción</th>
+                                                    <th style="text-align: end;">Acción</th>
+
+
+                                                    <tr>
+                                                        <td style="text-align: center">a</td>
+                                                        <td style="text-align: center">01</td>
+                                                        <td style="text-align: center">ABC</td>
+                                                        <td style="text-align: center"> 100 </td>
+                                                        <td style="text-align: center">100.00</td>
+                                                        <td style="text-align: center">45</td>
+                                                        <td style="text-align: center">244.55</td>
+                                                        <td style="text-align: end">
+                                                            <div class="buttons">
+                                                                <a class="msr-2 h-auto tblEditBtn">
+                                                                    <i class="fas fa-pen"></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                            </table>
+                                        </div>
+                                        <h1></h1>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <h6>Obras Complementarias</h6>
+                                            </div>
+
+                                        </div>
+                                        <ngx-datatable class="material" [rows]="data.predio.predioobracomplementaria_set" columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto">
+
+                                            <ngx-datatable-column [width]="250" name="Descripción" *ngIf="data.predio">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.descripcion}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column name="Metrado">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.metrado}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column name="UM">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.descripcion}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column [width]="200" name="Valor Unitario x UM">
+                                                <ng-template text-align="center" let-row="row" ngx-datatable-cell-template>
+                                                    {{row.valor_unitario}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column [width]="200" name="Valor Unit. Depreciado x UM">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.valor_depreciado}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column [width]="200" name="Valor Construcción">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.valor_construccion}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                        </ngx-datatable>
+                                        <h1></h1>
+                                        <div class="row">
+                                            <div class="form-group col-md-12">
+                                                <h6>Área Común</h6>
+                                            </div>
+
+                                        </div>
+                                        <ngx-datatable class="material" [rows]="data.predio.biencomuncompartido_set" columnMode="force" [headerHeight]="50" [footerHeight]="50" rowHeight="auto">
+
+                                            <ngx-datatable-column [width]="150" name="Código" *ngIf="data.predio">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.descripcion}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column [width]="250" name="Descripción">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.metrado}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column name="Valor">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.descripcion}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column name="%">
+                                                <ng-template text-align="center" let-row="row" ngx-datatable-cell-template>
+                                                    {{row.valor_unitario}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column [width]="200" name="Valor Porcentual">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.valor_depreciado}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                            <ngx-datatable-column name="Acción">
+                                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                                    {{row.valor_construccion}}
+                                                </ng-template>
+                                            </ngx-datatable-column>
+                                        </ngx-datatable>
+
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="3">
+                                    <a ngbNavLink>Contribuyente</a>
+                                    <ng-template ngbNavContent>
+
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label for="TipoDocumento">Tipo de Documento</label>
+                                                <input readonly id="TipoDocumento" type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.cod_tipo_doc_identidad}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label for="NumeroDocumento">Número de Documento<span class="text-danger">*</span></label>
+                                                <input readonly id="NumeroDocumento" type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.num_documento_identidad}}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label for="sexo">Sexo</label>
+                                                <input readonly id="sexo" type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.cod_sexo}}">
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <label>Fecha de nacimiento</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.fec_nacimiento| date:'dd/MM/yyyy'}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Apellido Paterno <span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.apellido_paterno}}">
+
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <label>Apellido Materno <span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.apellido_materno}}">
+
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Nombre <span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.nombre}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Teléfono<span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.telefono_principal}}">
+
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Teléfono secundario</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.telefono_secundario}}">
+
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Correo Electrónico<span class="text-danger">*</span></label>
+                                                <input readonly type="correo_electronico" class="form-control form-control-sm" value="{{data.contribuyente.correo_electronico}}">
+                                            </div>
+                                        </div>
+                                        <h6>Domicilio fiscal</h6>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Departamento</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.ubigeo.nombre_departamento}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Provincia</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.ubigeo.nombre_provincia}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Distrito</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.ubigeo.nombre_distrito}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Vía</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.cod_tipo_via}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Dirección</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.domicilio}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Nro/Int/Mz lt</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.nro_domicilio}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group">
+                                                <label>Referencia</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.referencia_domicilio}}">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-">
+                                                <label>Estado Civil<span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.cod_estado_civil}}">
+                                            </div>
+                                        </div>
+                                        <h6>Datos del Conyuge</h6>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Tipo de Documento</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.conyuge.cod_tipo_doc_identidad}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Número de Documento</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.conyuge.num_documento_identidad}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Sexo</label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.conyuge.cod_sexo}}">
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <label>Apellido Paterno <span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.conyuge.apellido_paterno}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Apellido Materno <span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.conyuge.apellido_materno}}">
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>Nombre <span class="text-danger">*</span></label>
+                                                <input readonly type="text" class="form-control form-control-sm" value="{{data.contribuyente.natural.conyuge.nombre}}">
+                                            </div>
+                                        </div>
+
+                                    </ng-template>
+                                </li>
+                            </ul>
+
+                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
